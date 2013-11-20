@@ -1,8 +1,8 @@
 define(['jquery'], function($) {
 
 	var Washi = function (options) {
-		this.el = options.el;
 		this.$el = $(options.el);
+		this.el = this.$el.get(0);
 
 		this.bindEvents();
 		this.bindUIElements();
