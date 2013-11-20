@@ -4,7 +4,7 @@ washi
 A simple, backbone inspired view helper.
 
 ```javascript
-require(['washi'], function(Washi) {
+define(['washi'], function(Washi) {
 
 	var Sample = Washi.extend({
 
@@ -28,4 +28,18 @@ require(['washi'], function(Washi) {
 	
 	return Sample;
 });
+
+require(['sample'], function(Sample) {
+	var sample = new Sample({
+		el: "#sample-el"
+	});
+})
+```
+
+Corresponding with:
+
+```html
+<div id="sample">
+    <h1 class="title">Paper Crane</h1>
+</div>
 ```
