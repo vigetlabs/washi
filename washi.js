@@ -1,6 +1,6 @@
 define(['jquery'], function($) {
 
-	var View = function (options) {
+	var Washi = function (options) {
 		this.el = options.el;
 		this.$el = $(options.el);
 
@@ -10,19 +10,19 @@ define(['jquery'], function($) {
 		this.initialize(options);
 	};
 
-	View.extend = function(options) {
+	Washi.extend = function(options) {
 		var Child = function(options) {
-			View.apply(this, arguments);
+			Washi.apply(this, arguments);
 		};
 
-		Child.extend = View.extend;
+		Child.extend = Washi.extend;
 
-		$.extend(Child.prototype, View.prototype, options);
+		$.extend(Child.prototype, Washi.prototype, options);
 
 		return Child;
 	};
 
-	View.prototype = {
+	Washi.prototype = {
 
 		initialize: function() {},
 
@@ -69,5 +69,5 @@ define(['jquery'], function($) {
 		}
 	};
 
-	return View;
+	return Washi;
 });
