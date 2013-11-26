@@ -36,9 +36,9 @@ define(['jquery'], function($) {
 		_eventMatcher: function(string) {
 			var pool = this._ui || this.ui;
 
-			return string.replace(/\{(.+?)\}/g, function(match, capture, index) {
+			return string? string.replace(/\{(.+?)\}/g, function(match, capture, index) {
 				return pool[capture];
-			});
+			}) : '';
 		},
 
 		bindEvents: function() {
