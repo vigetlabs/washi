@@ -13,7 +13,8 @@ define(['washi'], function(Washi) {
 		},
 
 		events: {
-			'click {title}': 'advance'
+			'click {title}': 'doSomething',
+			'mousedown {title}, touchstart {title}' : doSomethingElse
 		},
 
 		initialize: function(options) {
@@ -21,7 +22,11 @@ define(['washi'], function(Washi) {
 		},
 		
 		doSomething: function() {
-			alert(this.ui.title.text());			
+			console.log(this.ui.title.text());			
+		},
+		
+		doSomethingElse: function() {
+			console.log("Something else"
 		}
 
 	});
