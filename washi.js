@@ -35,8 +35,10 @@ define(['jquery'], function($) {
 
 		_eventMatcher: function(string) {
 			var pool = this._ui || this.ui;
-
-			return string? string.replace(/\{(.+?)\}/g, function(match, capture, index) {
+			
+			var isString = typeof string === 'string';
+			
+			return isString? string.replace(/\{(.+?)\}/g, function(match, capture, index) {
 				return pool[capture];
 			}) : '';
 		},
