@@ -1,8 +1,21 @@
-define(['jquery'], function($) {
+(function(factory) {
+	if (typeof define === 'function' && define.amd) {
+		// AMD. Register as an anonymous module.
+		define(['jquery'], factory);
+	} else if (typeof exports === 'object') {
+		// Node/CommonJS
+		factory(require('jquery'));
+	} else {
+		// Browser globals
+		window.Washi = factory(window.jQuery);
+	}
+}(function($) {
 
 	var Washi = function (options) {
-		this.$el = $(options.el);
-		this.el = this.$el.get(0);
+		options = options || {};
+
+		this.$el = $(this._getElement(options));
+		this.el  = this.$el.get(0);
 
 		this.bindEvents();
 		this.bindUIElements();
@@ -26,6 +39,10 @@ define(['jquery'], function($) {
 
 		initialize: function() {},
 
+		el: function() {
+			return document.body;
+		},
+
 		events: {},
 		ui: {},
 
@@ -33,11 +50,16 @@ define(['jquery'], function($) {
 			return this.$el.find(selector);
 		},
 
+		_getElement: function(options) {
+			var el = options.el || options.$el || this.el;
+			return typeof el === 'function'? el() : el;
+		},
+
 		_eventMatcher: function(string) {
 			var pool = this._ui || this.ui;
-			
+
 			var isString = typeof string === 'string';
-			
+
 			return isString? string.replace(/\{(.+?)\}/g, function(match, capture, index) {
 				return pool[capture];
 			}) : '';
@@ -72,4 +94,4 @@ define(['jquery'], function($) {
 	};
 
 	return Washi;
-});
+}));
