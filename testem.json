@@ -1,9 +1,9 @@
 {
 	"framework": "mocha+chai",
 
-    "src_files": [
-        "test/lib/**/*.js",
-        "washi.js",
+	"src_files": [
+		"test/lib/**/*.js",
+		"washi.js",
 		"test/**/*-test.js"
 	]
 }
