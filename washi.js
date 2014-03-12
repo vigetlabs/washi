@@ -88,7 +88,7 @@
 			// For each attribute, perform a selection
 			// within the context of this View's element
 			$.each(this._ui, function(component, selector) {
-				this.ui[component] = this.$el.find(selector);
+				this.ui[component] = this.$(selector);
 			}.bind(this));
 		}
 	};
