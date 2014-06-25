@@ -1,0 +1,22 @@
+{
+  "name": "washi",
+  "version": "1.0.1",
+  "description": "One of many backbone-esque view helpers.",
+  "main": "washi.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "testem"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vigetlabs/washi.git"
+  },
+  "author": "Nate Hunzaker, Viget Labs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vigetlabs/washi/issues"
+  },
+  "homepage": "https://github.com/vigetlabs/washi"
+}
