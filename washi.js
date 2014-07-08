@@ -24,13 +24,14 @@
 	};
 
 	Washi.extend = function(options) {
+		var Parent = this;
 		var Child = function(options) {
-			Washi.apply(this, arguments);
+			Parent.apply(this, arguments);
 		};
 
-		Child.extend = Washi.extend;
+		Child.extend = Parent.extend;
 
-		$.extend(Child.prototype, Washi.prototype, options);
+		$.extend(Child.prototype, Parent.prototype, options);
 
 		return Child;
 	};

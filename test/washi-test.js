@@ -1,5 +1,12 @@
 describe("Washi", function() {
 
+	it ('can be extended multiple times', function() {
+		var w = new (Washi.extend({ head: 'head' }).extend({ tail: 'tail' }));
+
+		w.head.should.equal('head');
+		w.tail.should.equal('tail');
+	});
+
 	describe("Selection", function() {
 		var el = document.createElement("p");
 
