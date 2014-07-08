@@ -17,10 +17,18 @@
 		this.$el = $(this._getElement(options));
 		this.el  = this.$el.get(0);
 
+		this.parent = options.parent || null;
+
 		this.bindEvents();
 		this.bindUIElements();
 
 		this.initialize(options);
+
+		var mixinOptions = $.extend({}, options, { parent: this });
+
+		this.children = $.map(this.mixins || [], function(Mixin) {
+			return new Mixin(mixinOptions)
+		});
 	};
 
 	Washi.extend = function(options) {

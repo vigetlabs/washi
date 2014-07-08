@@ -7,6 +7,21 @@ describe("Washi", function() {
 		w.tail.should.equal('tail');
 	});
 
+	it ('can mixin other washi entities', function() {
+		var Child = Washi.extend({
+			child: true
+		});
+
+		var Parent = Washi.extend({
+			mixins: [Child]
+		});
+
+		var parent = new Parent();
+
+		parent.children[0].should.be.instanceof(Child);
+		parent.children[0].parent.should.be.instanceof(Parent);
+	});
+
 	describe("Selection", function() {
 		var el = document.createElement("p");
 
