@@ -1,5 +1,4 @@
 describe("Washi", function() {
-
 	it ('can be extended multiple times', function() {
 		var w = new (Washi.extend({ head: 'head' }).extend({ tail: 'tail' }));
 

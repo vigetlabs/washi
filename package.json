@@ -1,6 +1,6 @@
 {
   "name": "washi",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "One of many backbone-esque view helpers.",
   "main": "washi.js",
   "directories": {
@@ -18,8 +18,5 @@
   "bugs": {
     "url": "https://github.com/vigetlabs/washi/issues"
   },
-  "homepage": "https://github.com/vigetlabs/washi",
-  "peerDependencies": {
-    "jquery": ">= 1.x"
-  }
+  "homepage": "https://github.com/vigetlabs/washi"
 }

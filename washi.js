@@ -1,20 +1,20 @@
 (function(factory) {
 	if (typeof define === 'function' && define.amd) {
 		// AMD. Register as an anonymous module.
-		define(['jquery'], factory);
+		define(factory);
 	} else if (typeof exports === 'object') {
 		// Node/CommonJS
-		module.exports = factory(require('jquery'));
+		module.exports = factory();
 	} else {
 		// Browser globals
-		window.Washi = factory(window.jQuery);
+		window.Washi = factory();
 	}
-}(function($) {
+}(function() {
 
 	var Washi = function (options) {
 		options = options || {};
 
-		this.$el = $(this._getElement(options));
+		this.$el = Washi.$(this._getElement(options));
 		this.el  = this.$el.get(0);
 
 		this.parent = options.parent || null;
@@ -26,10 +26,12 @@
 
 		var mixinOptions = $.extend({}, options, { parent: this });
 
-		this.children = $.map(this.mixins || [], function(Mixin) {
+		this.children = Washi.$.map(this.mixins || [], function(Mixin) {
 			return new Mixin(mixinOptions)
 		});
 	};
+
+	var $ = Washi.$ = window.jQuery;
 
 	Washi.extend = function(options) {
 		var Parent = this;
