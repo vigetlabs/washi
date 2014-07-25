@@ -1,6 +1,8 @@
 washi
 =====
 
+[![Build Status](https://travis-ci.org/vigetlabs/washi.png?branch=master)](https://travis-ci.org/vigetlabs/washi)
+
 A simple, backbone inspired view helper.
 
 ```javascript
