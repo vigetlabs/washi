@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "testem"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/vigetlabs/washi",
   "devDependencies": {
     "chai": "^1.9.1",
+    "jest": "^0.1.37",
     "jquery": "^2.1.1"
   }
 }
