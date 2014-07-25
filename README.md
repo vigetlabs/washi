@@ -47,7 +47,7 @@ Corresponding with:
 
 ### Mixins
 
-Washi defines mixins as other Washi components which layer on top of the including component. This means that mixins have their own `ui` and `event` objects:
+Washi defines mixins as other Washi components which layer on top of the including component. This means that mixins have their own `ui` and `event` objects. When instantiated, the parent component will instantiate a copy of all of its mixins with the same arguments.
 
 ```javascript
 var Child  = Washi.extend({
