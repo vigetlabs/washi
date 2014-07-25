@@ -1,9 +1,15 @@
+jest.autoMockOff();
+
 describe("Washi", function() {
+
+	Washi = require('washi');
+	var $ = Washi.$ = require('jquery');
+
 	it ('can be extended multiple times', function() {
 		var w = new (Washi.extend({ head: 'head' }).extend({ tail: 'tail' }));
 
-		w.head.should.equal('head');
-		w.tail.should.equal('tail');
+		expect(w.head).toEqual('head');
+		expect(w.tail).toEqual('tail');
 	});
 
 	it ('can mixin other washi entities', function() {
@@ -17,8 +23,8 @@ describe("Washi", function() {
 
 		var parent = new Parent();
 
-		parent.children[0].should.be.instanceof(Child);
-		parent.children[0].parent.should.be.instanceof(Parent);
+		expect(parent.children[0] instanceof Child).toBeTruthy();
+		expect(parent.children[0].parent instanceof Parent).toBeTruthy();
 	});
 
 	describe("Selection", function() {
@@ -26,23 +32,17 @@ describe("Washi", function() {
 
 		it ("has an `el`", function() {
 			var w = new Washi({ el: el });
-
-			w.el.should.equal(el);
-			w.$el.is(el).should.equal(true);
+			expect(w.$el.is(w.el)).toBeTruthy();
 		});
 
 		it ("also accepts `$el` as the element option", function() {
 			var w = new Washi({ $el: el });
-
-			w.el.should.equal(el);
-			w.$el.is(el).should.equal(true);
+			expect(w.$el.is(w.el)).toBeTruthy();
 		});
 
 		it ("defaults `el` to document.body", function() {
 			var w = new Washi();
-
-			w.el.should.equal(document.body);
-			w.$el.is(document.body).should.equal(true);
+			expect(w.$el.is(document.body)).toBeTruthy();
 		});
 
 		it ("has an extendable default view", function() {
@@ -51,25 +51,25 @@ describe("Washi", function() {
 			});
 			var m = new Meta();
 
-			m.el.tagName.should.equal("P");
+			expect(m.el.tagName).toEqual("P");
 		});
 
 		it ("has a scoped selection method", function() {
 			var w = new Washi({ el: el });
-			w.$().context.should.equal(el);
+			expect(w.$().context).toEqual(w.el);
 		});
 
 		describe("Children", function() {
 			it ("can select children using the `ui` attribute", function() {
 				var Meta = Washi.extend({
-					el: $("<div><p></p></div>"),
+					el: Washi.$("<div><p></p></div>"),
 					ui: {
 						child: 'p'
 					}
 				});
 
 				var m = new Meta();
-				m.ui.child.is("p").should.equal(true);
+				expect(m.ui.child.is("p")).toBeTruthy();
 			});
 		});
 
@@ -82,37 +82,29 @@ describe("Washi", function() {
 			el = $("<div><p class='test'>Test</p></div>");
 		});
 
-		it ("delegates events to its element", function(done) {
+		it ("delegates events to its element", function() {
+			var clicked = false;
+			
 			var Meta = Washi.extend({
 				el: el,
 				events: {
 					click: 'finished'
 				},
 				finished: function() {
-					done();
+					clicked = true;
 				}
 			});
 
 			var m = new Meta();
+			
 			m.$el.trigger('click');
+
+			expect(clicked).toBeTruthy();
 		});
 
-		it ("delegates events to child elements", function(done) {
-			var Meta = Washi.extend({
-				el: el,
-				events: {
-					'click p': 'finished'
-				},
-				finished: function() {
-					done();
-				}
-			});
-
-			var m = new Meta();
-			m.$('p').trigger('click');
-		});
-
-		it ("can alias event names using the ui object", function(done) {
+		it ("can alias event names using the ui object", function() {
+			var clicked = false;
+			
 			var Meta = Washi.extend({
 				el: el,
 				ui: {
@@ -122,12 +114,14 @@ describe("Washi", function() {
 					'click {child}': 'finished'
 				},
 				finished: function() {
-					done();
+					clicked = true;
 				}
 			});
 
 			var m = new Meta();
 			m.$('p').trigger('click');
+			
+			expect(clicked).toBeTruthy();
 		});
 	});
 });

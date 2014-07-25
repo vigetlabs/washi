@@ -1,6 +1,10 @@
 {
 	"framework": "mocha+chai",
-
+	
+	"before_tests": "browserify washi.js -o test/browserified.js",
+    "on_exit": "rm test/browserified.js",
+	
+	"serve_files": [ "test/browserified.js" ],
 	"src_files": [
 		"test/lib/**/*.js",
 		"washi.js",

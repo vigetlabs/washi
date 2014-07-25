@@ -13,7 +13,7 @@
 
 	var Washi = function (options) {
 		var $ = Washi.$;
-		
+
 		options = options || {};
 
 		this.$el = Washi.$(this._getElement(options));
@@ -80,7 +80,7 @@
 
 		bindEvents: function() {
 			var $ = Washi.$;
-			
+
 			$.each(this.events, function(name, method) {
 				var singletons = name.split(',');
 
@@ -97,7 +97,7 @@
 		bindUIElements: function() {
 			// Make a deep clone for later reference
 			// should rebinding be necessary
-			this._ui = this._ui || $.extend(true, {}, this.ui);
+			this._ui = this._ui || Washi.$.extend(true, {}, this.ui);
 			this.ui = {};
 
 			// For each attribute, perform a selection
