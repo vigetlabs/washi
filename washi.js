@@ -12,6 +12,8 @@
 }(function() {
 
 	var Washi = function (options) {
+		var $ = Washi.$;
+		
 		options = options || {};
 
 		this.$el = Washi.$(this._getElement(options));
@@ -26,7 +28,7 @@
 
 		var mixinOptions = $.extend({}, options, { parent: this });
 
-		this.children = Washi.$.map(this.mixins || [], function(Mixin) {
+		this.children = $.map(this.mixins || [], function(Mixin) {
 			return new Mixin(mixinOptions)
 		});
 	};
@@ -41,7 +43,7 @@
 
 		Child.extend = Parent.extend;
 
-		$.extend(Child.prototype, Parent.prototype, options);
+		Washi.$.extend(Child.prototype, Parent.prototype, options);
 
 		return Child;
 	};
@@ -77,6 +79,8 @@
 		},
 
 		bindEvents: function() {
+			var $ = Washi.$;
+			
 			$.each(this.events, function(name, method) {
 				var singletons = name.split(',');
 
@@ -98,7 +102,7 @@
 
 			// For each attribute, perform a selection
 			// within the context of this View's element
-			$.each(this._ui, function(component, selector) {
+			Washi.$.each(this._ui, function(component, selector) {
 				this.ui[component] = this.$(selector);
 			}.bind(this));
 		}
