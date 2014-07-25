@@ -44,3 +44,19 @@ Corresponding with:
     <h1 class="title">Paper Crane</h1>
 </div>
 ```
+
+### Mixins
+
+Washi defines mixins as other Washi components which layer on top of the including component. This means that mixins have their own `ui` and `event` objects:
+
+```javascript
+var Child  = Washi.extend({
+	ui: { selector: '#foo' }
+});
+
+var Parent = Washi.extend({
+	mixins: [Child]
+});
+```
+
+Additionally, parent components have a `children` reference to their mixed in component children. Components used as mixins also have a `parent` attribute that references the component that included them as a mixin.
