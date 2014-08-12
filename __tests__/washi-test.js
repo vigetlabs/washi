@@ -12,6 +12,20 @@ describe("Washi", function() {
 		expect(w.tail).toEqual('tail');
 	});
 
+	it ('can have static methods', function() {
+		var W = Washi.extend(null, { val: true });
+
+		expect(W.val).toEqual(true);
+	});
+
+	it ('static methods persist', function() {
+		var W = Washi.extend(null, { val: true });
+		var X = W.extend(null, { anotherVal: true });
+
+		expect(X.val).toEqual(true);
+		expect(X.anotherVal).toEqual(true);
+	});
+
 	it ('can mixin other washi entities', function() {
 		var Child = Washi.extend({
 			child: true
@@ -25,6 +39,24 @@ describe("Washi", function() {
 
 		expect(parent.children[0] instanceof Child).toBeTruthy();
 		expect(parent.children[0].parent instanceof Parent).toBeTruthy();
+	});
+
+	it ('does not mixin washi entities whose precondition fails', function() {
+		var Child = Washi.extend({
+			child: true
+		}, {
+			precondition: function() {
+				return false;
+			}
+		});
+
+		var Parent = Washi.extend({
+			mixins: [Child]
+		});
+
+		var parent = new Parent();
+
+		expect(parent.children.length).toEqual(0);
 	});
 
 	describe("Selection", function() {
@@ -84,7 +116,7 @@ describe("Washi", function() {
 
 		it ("delegates events to its element", function() {
 			var clicked = false;
-			
+
 			var Meta = Washi.extend({
 				el: el,
 				events: {
@@ -96,7 +128,7 @@ describe("Washi", function() {
 			});
 
 			var m = new Meta();
-			
+
 			m.$el.trigger('click');
 
 			expect(clicked).toBeTruthy();
@@ -104,7 +136,7 @@ describe("Washi", function() {
 
 		it ("can alias event names using the ui object", function() {
 			var clicked = false;
-			
+
 			var Meta = Washi.extend({
 				el: el,
 				ui: {
@@ -120,7 +152,7 @@ describe("Washi", function() {
 
 			var m = new Meta();
 			m.$('p').trigger('click');
-			
+
 			expect(clicked).toBeTruthy();
 		});
 	});

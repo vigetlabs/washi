@@ -28,14 +28,18 @@
 
 		var mixinOptions = $.extend({}, options, { parent: this });
 
-		this.children = $.map(this.mixins || [], function(Mixin) {
-			return new Mixin(mixinOptions)
+		var activated = (this.mixins || []).filter(function(mixin) {
+			return mixin.precondition ? mixin.precondition(mixinOptions) : true;
+		});
+
+		this.children = $.map(activated, function(Mixin) {
+			return new Mixin(mixinOptions);
 		});
 	};
 
 	var $ = Washi.$ = window.jQuery;
 
-	Washi.extend = function(options) {
+	Washi.extend = function(options, statics) {
 		var Parent = this;
 		var Child = function(options) {
 			Parent.apply(this, arguments);
@@ -44,6 +48,7 @@
 		Child.extend = Parent.extend;
 
 		Washi.$.extend(Child.prototype, Parent.prototype, options);
+		Washi.$.extend(Child, Parent, statics);
 
 		return Child;
 	};
