@@ -3,11 +3,16 @@ washi
 
 [![Build Status](https://travis-ci.org/vigetlabs/washi.png?branch=master)](https://travis-ci.org/vigetlabs/washi)
 
-A simple, backbone inspired view helper.
+A simple, `Backbone` inspired view helper. Washi allows you to quickly define interface logic similarly to `Backbone.View`s.
+
+### Basic usage
+
+Washi can be included globally, with AMD, or CommonJS. This example demonstrates usage with CommonJS:
 
 ```javascript
 // New as of 2.0 to get around some strangeness with module systems
-Washi.$ = require('jquery');
+var Washi = require('washi');
+Washi.$   = require('jquery');
 
 var Sample = Washi.extend({
 
