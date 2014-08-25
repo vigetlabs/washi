@@ -19,7 +19,9 @@
 		this.$el = Washi.$(this._getElement(options));
 		this.el  = this.$el.get(0);
 
-		this.parent = options.parent || null;
+    this.mixins   = this.mixins || []
+		this.parent   = options.parent || null;
+    this.children = [];
 
 		this.bindEvents();
 		this.bindUIElements();
@@ -28,16 +30,18 @@
 
 		var mixinOptions = $.extend({}, options, { parent: this });
 
-		var activated = (this.mixins || []).filter(function(mixin) {
-			return mixin.precondition ? mixin.precondition(mixinOptions) : true;
-		});
-
-		this.children = $.map(activated, function(Mixin) {
-			return new Mixin(mixinOptions);
-		});
+    for (var i = 0, j = this.mixins.length; i < j; i++) {
+      if (Washi.testMixin(this.mixins[i], mixinOptions)) {
+        this.children.push(new this.mixins[i](mixinOptions));
+      }
+    }
 	};
 
 	var $ = Washi.$ = window.jQuery;
+
+  Washi.testMixin = function(mixin, options) {
+    return mixin.precondition ? mixin.precondition(options) : true;
+  };
 
 	Washi.extend = function(options, statics) {
 		var Parent = this;
