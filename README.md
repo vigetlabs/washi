@@ -21,8 +21,11 @@ var Sample = Washi.extend({
     },
 
     events: {
-        'click {title}': 'doSomething',
-        'mousedown {title}, touchstart {title}' : doSomethingElse
+        // Use ui helper selectors as aliases with {element}
+        'mousedown {title}, touchstart {title}' : doSomethingElse,
+
+        // Alternatively, follow the syntax used by Backbone.Marionette
+        'click @ui.title': 'doSomething'
     },
 
     initialize: function(options) {

@@ -11,6 +11,8 @@
   }
 }(function() {
 
+  var eventAliasPattern = /\{(\s*.+?\s*)\}|\@ui\.(.+)/;
+
   var Washi = function (options) {
     var $ = Washi.$;
 
@@ -28,7 +30,7 @@
 
     this.initialize(options);
 
-    var mixinOptions = $.extend({}, options, { parent: this });
+    var mixinOptions = Washi.$.extend({}, options, { parent: this });
 
     for (var i = 0, j = this.mixins.length; i < j; i++) {
       if (Washi.testMixin(this.mixins[i], mixinOptions)) {
@@ -82,8 +84,8 @@
 
       var isString = typeof string === 'string';
 
-      return isString? string.replace(/\{(.+?)\}/g, function(match, capture, index) {
-        return pool[capture];
+      return isString ? string.replace(eventAliasPattern, function(match, capture, index) {
+        return pool[Washi.$.trim(capture)];
       }) : '';
     },
 
@@ -94,7 +96,7 @@
         var singletons = name.split(',');
 
         $.each(singletons, function(i, event) {
-          var props = event.split(' ');
+          var props = event.split(' ', 1);
           var type = props[0];
           var selector = this._eventMatcher(props[1]);
 

@@ -155,5 +155,49 @@ describe("Washi", function() {
 
       expect(clicked).toBeTruthy();
     });
+
+    it ("trims matched aliases", function() {
+      var clicked = false;
+
+      var Meta = Washi.extend({
+        el: el,
+        ui: {
+          child: 'p'
+        },
+        events: {
+          'click { child }': 'finished'
+        },
+        finished: function() {
+          clicked = true;
+        }
+      });
+
+      var m = new Meta();
+      m.$('p').trigger('click');
+
+      expect(clicked).toBeTruthy();
+    });
+
+    it ("supports Backbone.Marionette style aliases", function() {
+      var clicked = false;
+
+      var Meta = Washi.extend({
+        el: el,
+        ui: {
+          child: 'p'
+        },
+        events: {
+          'click @ui.child': 'finished'
+        },
+        finished: function() {
+          clicked = true;
+        }
+      });
+
+      var m = new Meta();
+      m.$('p').trigger('click');
+
+      expect(clicked).toBeTruthy();
+    });
   });
 });
