@@ -10,8 +10,10 @@
     window.Washi = factory();
   }
 }(function() {
+  "use strict";
 
-  var eventAliasPattern = /\{(\s*.+?\s*)\}|\@ui\.(.+)/;
+  var eventAliasPattern = /(?:\@ui\.|\{|\s*)(\w+)(?:\s*|\})/i;
+  var eventTokenPattern = /(^\w+)|(\{\s*\w+\s*\}|(\@ui\.(\w+)))/g;
 
   var Washi = function (options) {
     var $ = Washi.$;
@@ -59,20 +61,22 @@
     return Child;
   };
 
+  Washi.tokenize = function(string) {
+    return string.match(eventTokenPattern);
+  };
+
   Washi.prototype = {
 
     initialize: function() {},
 
-    el: function() {
-      return document.body;
-    },
-
-    events: {},
-    ui: {},
+    el: document.body,
 
     $: function(selector) {
       return this.$el.find(selector);
     },
+
+    events: {},
+    ui: {},
 
     _getElement: function(options) {
       var el = options.el || options.$el || this.el;
@@ -80,29 +84,36 @@
     },
 
     _eventMatcher: function(string) {
-      var pool = this._ui || this.ui;
+      var pool    = this._ui || this.ui;
+      var toMatch = typeof string === 'string' ? string : '';
+      var matches = toMatch.match(eventAliasPattern);
 
-      var isString = typeof string === 'string';
+      return matches? pool[matches[1]] : '';
+    },
 
-      return isString ? string.replace(eventAliasPattern, function(match, capture, index) {
-        return pool[Washi.$.trim(capture)];
-      }) : '';
+    _getMethod: function(signature) {
+      var isFunction = typeof signature === 'function';
+      return (isFunction ? signature : this[signature]).bind(this);
+    },
+
+    _delegate: function(type, selector, fn) {
+      this.$el.on(type, selector, fn);
+    },
+
+    _bindEvent: function(name, method) {
+      var items  = name.split(',');
+      var toCall = this._getMethod(method);
+
+      do {
+        var tokens = Washi.tokenize(items.pop());
+        this._delegate(tokens[0], this._eventMatcher(tokens[1]), toCall);
+      } while (items.length)
     },
 
     bindEvents: function() {
-      var $ = Washi.$;
-
-      $.each(this.events, function(name, method) {
-        var singletons = name.split(',');
-
-        $.each(singletons, function(i, event) {
-          var props = event.split(' ', 1);
-          var type = props[0];
-          var selector = this._eventMatcher(props[1]);
-
-          this.$el.on(type, selector, this[method].bind(this));
-        }.bind(this));
-      }.bind(this));
+      for (var e in this.events) {
+        if (this.events.hasOwnProperty(e)) this._bindEvent(e, this.events[e]);
+      }
     },
 
     bindUIElements: function() {
@@ -113,9 +124,11 @@
 
       // For each attribute, perform a selection
       // within the context of this View's element
-      Washi.$.each(this._ui, function(component, selector) {
-        this.ui[component] = this.$(selector);
-      }.bind(this));
+      for (var component in this._ui) {
+        if (this._ui.hasOwnProperty(component)) {
+          this.ui[component] = this.$(this._ui[component]);
+        }
+      }
     }
   };
 
