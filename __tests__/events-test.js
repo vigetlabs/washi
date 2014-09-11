@@ -23,6 +23,26 @@ describe("Events", function() {
       expect(m.finished).toBeCalled();
     });
 
+    it ("delegates events to regular selectors", function() {
+      var Meta = Washi.extend({
+        el: '<div><p></p></div>',
+        ui: {
+          child: 'p'
+        },
+        events: {
+          'click p': 'finished'
+        },
+        finished: jest.genMockFunction()
+      });
+
+      var m = new Meta();
+
+      m.ui.child.trigger('click');
+
+      expect(m.finished).toBeCalled();
+      expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
+    });
+
     it ("can alias event names using the ui object", function() {
       var Meta = Washi.extend({
         el: '<div><p></p></div>',
@@ -39,7 +59,7 @@ describe("Events", function() {
       m.ui.child.trigger('click');
 
       expect(m.finished).toBeCalled();
-      expect(m.finished.mock.calls[0][0].currentTarget.tagName).toEqual('P')
+      expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
     });
 
     it ("trims matched aliases", function() {
@@ -59,7 +79,7 @@ describe("Events", function() {
       m.ui.child.trigger('click');
 
       expect(m.finished).toBeCalled();
-      expect(m.finished.mock.calls[0][0].currentTarget.tagName).toEqual('P')
+      expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
     });
 
     it ("supports Backbone.Marionette style aliases", function() {
@@ -78,7 +98,7 @@ describe("Events", function() {
       m.ui.child.trigger('click');
 
       expect(m.finished).toBeCalled()
-      expect(m.finished.mock.calls[0][0].currentTarget.tagName).toEqual('P')
+      expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
     });
   });
 });

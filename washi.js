@@ -13,7 +13,7 @@
   "use strict";
 
   var eventAliasPattern = /(?:\@ui\.|\{|\s*)(\w+)(?:\s*|\})/i;
-  var eventTokenPattern = /(^\w+)|(\{\s*\w+\s*\}|(\@ui\.(\w+)))/g;
+  var eventTokenPattern = /(^\w+)|(\{\s*\w+\s*\}|(\@ui\.(\w+)))|\b(\w+)$/g;
 
   var Washi = function (options) {
     var $ = Washi.$;
@@ -87,8 +87,7 @@
       var pool    = this._ui || this.ui;
       var toMatch = typeof string === 'string' ? string : '';
       var matches = toMatch.match(eventAliasPattern);
-
-      return matches? pool[matches[1]] : '';
+      return matches? pool[matches[1]] : string;
     },
 
     _getMethod: function(signature) {
