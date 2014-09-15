@@ -12,10 +12,9 @@
 }(function() {
   "use strict";
 
-  var eventAliasPattern = /(?:\@ui\.|\{|\s*)(\w+)(?:\s*|\})/i;
-  var eventTokenPattern = /(^\w+)|(\{\s*\w+\s*\}|(\@ui\.(\w+)))|\b(\w+)$/g;
+  var eventAliasPattern = /(?:\@ui\.|\{*)([^{}\n]+)(?:\}*)/i;
 
-  var Washi = function (options) {
+  var Washi = function(options) {
     var $ = Washi.$;
 
     options = options || {};
@@ -62,7 +61,7 @@
   };
 
   Washi.tokenize = function(string) {
-    return string.match(eventTokenPattern);
+    return string.replace(/\{\s/g, '{').replace(/\s\}/g, '}').split(/\s+/);
   };
 
   Washi.prototype = {
