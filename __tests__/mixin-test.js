@@ -2,38 +2,36 @@ jest.autoMockOff();
 
 describe("Washi", function() {
 
-  Washi = require('washi');
-  var $ = Washi.$ = require('jquery');
+  var Washi = require('washi');
 
-  it ('can mixin other washi entities', function() {
-    var Child = Washi.extend({
-      child: true
-    });
+  it.only ('can mixin other washi entities', function() {
+    var Child = {
+      isChild: true
+    }
 
-    var Parent = Washi.extend({
-      mixins: [Child]
-    });
+    var Parent = {
+      children: [ Child ]
+    }
 
-    var parent = new Parent();
+    var parent = Washi(Parent);
 
-    expect(parent.children[0] instanceof Child).toBeTruthy();
-    expect(parent.children[0].parent instanceof Parent).toBeTruthy();
+    expect(parent.children[0].isChild).toBeTruthy();
   });
 
   it ('does not mixin washi entities whose precondition fails', function() {
-    var Child = Washi.extend({
-      child: true
-    }, {
+    var Child = {
+      child: true,
+
       precondition: function() {
         return false;
       }
-    });
+    }
 
-    var Parent = Washi.extend({
-      mixins: [Child]
-    });
+    var Parent = {
+      children: [Child]
+    }
 
-    var parent = new Parent();
+    var parent = Washi(Parent);
 
     expect(parent.children.length).toEqual(0);
   });

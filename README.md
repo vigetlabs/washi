@@ -3,18 +3,12 @@ washi
 
 [![Build Status](https://travis-ci.org/vigetlabs/washi.png?branch=master)](https://travis-ci.org/vigetlabs/washi)
 
-A simple, `Backbone` inspired view helper. Washi allows you to quickly define interface logic similarly to `Backbone.View`s.
-
 ### Basic usage
 
-Washi can be included globally, with AMD, or CommonJS. This example demonstrates usage with CommonJS:
-
 ```javascript
-// New as of 2.0 to get around some strangeness with module systems
 var Washi = require('washi');
-Washi.$   = require('jquery');
 
-var Sample = Washi.extend({
+var Sample = {
 
     ui: {
         title: '.title',
@@ -29,20 +23,20 @@ var Sample = Washi.extend({
     },
 
     initialize: function(options) {
-        this.ui.title.text("Washi is for Origami");
+        this.ui.title.innerHTML = "Washi is for Origami";
     },
 
     doSomething: function() {
-        console.log(this.ui.title.text());
+        console.log(this.ui.title.innerHTML);
     },
 
     doSomethingElse: function() {
-        console.log("Something else"
+        console.log("Something else");
     }
 
-});
+};
 
-var sample = new Sample({
+var sample = Washi(Sample, {
     el: "#sample-el"
 });
 ```
@@ -55,46 +49,32 @@ Corresponding with:
 </div>
 ```
 
-### Static methods
+### Child components
 
-To add static methods to a Washi component, provide them as the secondary argument to `extend`:
-
-```javascript
-var Component = Washi.extend({}, {
-	shout: function() {
-		alert("SHOUT");
-    }
-});
-
-Component.shout();
-```
-
-### Mixins
-
-Washi defines mixins as other Washi components which layer on top of the including component. This means that mixins have their own `ui` and `event` objects. When instantiated, the parent component will instantiate a copy of all of its mixins with the same arguments.
+Washi defines children as other Washi components which layer on top of the including component. This means that mixins have their own `ui` and `event` objects. When instantiated, the parent component will instantiate a copy of all of its mixins with the same arguments.
 
 ```javascript
-var Child  = Washi.extend({
+var Child  = {
 	ui: { selector: '#foo' }
-});
+};
 
-var Parent = Washi.extend({
-	mixins: [Child]
-});
+var Parent = {
+	children: [ Child ]
+};
+
+var p = Washi(Parent);
 ```
-
-Additionally, parent components have a `children` reference to their mixed in component children. Components used as mixins also have a `parent` attribute that references the component that included them as a mixin.
 
 ### Conditionally applying mixins
 
 Mixins may be conditionally applied by providing a static `precondition` method to a component:
 
 ```javascript
-var Mixin = Washi.extend({}, {
+var Mixin = {
 	precondition: function(options) {
 	    return true
 	}
-});
+}
 ```
 
 ## License

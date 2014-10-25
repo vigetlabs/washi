@@ -2,30 +2,41 @@ jest.autoMockOff();
 
 describe("Events", function() {
 
-  Washi = require('washi');
-  var $ = Washi.$ = require('jquery');
+  var Washi = require('washi');
+
+  function click (el) {
+    var event = document.createEvent('MouseEvents');
+    event.initEvent('click', true, false );
+    el.dispatchEvent(event);
+  }
 
   describe("Events", function() {
 
-    it ("delegates events to its element", function() {
-      var Meta = Washi.extend({
-        el: '<div><p></p></div>',
+    it ("binds events to its element", function() {
+      var m = Washi({
+
+        el: document.createElement('button'),
+
         events: {
           click: 'finished'
         },
+
         finished: jest.genMockFunction()
+
       });
 
-      var m = new Meta();
-
-      m.$el.trigger('click');
+      click(m.el);
 
       expect(m.finished).toBeCalled();
     });
 
     it ("delegates events to regular selectors", function() {
-      var Meta = Washi.extend({
-        el: '<div><p></p></div>',
+      var m = Washi({
+        el: function() {
+          var div = document.createElement('div');
+          div.innerHTML = "<p>Test</p>";
+          return div;
+        },
         ui: {
           child: 'p'
         },
@@ -35,17 +46,19 @@ describe("Events", function() {
         finished: jest.genMockFunction()
       });
 
-      var m = new Meta();
-
-      m.ui.child.trigger('click');
+      click(m.ui.child[0]);
 
       expect(m.finished).toBeCalled();
       expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
     });
 
     it ("can alias event names using the ui object", function() {
-      var Meta = Washi.extend({
-        el: '<div><p></p></div>',
+      var m = Washi({
+        el: function() {
+          var div = document.createElement('div');
+          div.innerHTML = "<p>Test</p>";
+          return div;
+        },
         ui: {
           child: 'p'
         },
@@ -55,16 +68,19 @@ describe("Events", function() {
         finished: jest.genMockFunction()
       });
 
-      var m = new Meta();
-      m.ui.child.trigger('click');
+      click(m.ui.child[0]);
 
       expect(m.finished).toBeCalled();
       expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
     });
 
     it ("trims matched aliases", function() {
-      var Meta = Washi.extend({
-        el: '<div><p></p></div>',
+      var m = Washi({
+        el: function() {
+          var div = document.createElement('div');
+          div.innerHTML = "<p>Test</p>";
+          return div;
+        },
         ui: {
           child: 'p'
         },
@@ -74,30 +90,9 @@ describe("Events", function() {
         finished: jest.genMockFunction()
       });
 
-      var m = new Meta();
-
-      m.ui.child.trigger('click');
+      click(m.ui.child[0]);
 
       expect(m.finished).toBeCalled();
-      expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
-    });
-
-    it ("supports Backbone.Marionette style aliases", function() {
-      var Meta = Washi.extend({
-        el: '<div><p></p></div>',
-        ui: {
-          child: 'p'
-        },
-        events: {
-          'click @ui.child': 'finished'
-        },
-        finished: jest.genMockFunction()
-      });
-
-      var m = new Meta();
-      m.ui.child.trigger('click');
-
-      expect(m.finished).toBeCalled()
       expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
     });
   });
