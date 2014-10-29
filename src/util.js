@@ -30,6 +30,7 @@ extend(Util, collection, {
   on             : require('./delegate'),
   result         : require('./result'),
   tap            : require('./tap'),
+  template       : require('./template'),
   tokenize       : require('./tokenize')
 });
 

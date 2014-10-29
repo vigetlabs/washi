@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "dom-event": "0.0.1",
-    "is-dom": "^1.0.4",
-    "new-element": "0.0.2"
+    "is-dom": "^1.0.4"
   }
 }
