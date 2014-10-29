@@ -12,12 +12,12 @@ var _         = require('./src/util');
 var result    = _.result;
 var testMixin = require('./src/testMixin');
 
-var Washi = function (component) {
+var Washi = function () {
   // Construct a new object, building from a given prototype
   var assembled = Object.create(Washi.prototype);
 
   // Fold in all "mixins"
-  _.extend(assembled, component);
+  _.extend.apply(null, [ assembled ].concat(_.toArray(arguments)));
 
   // If the precondition fails, don't do anything
   if (result(assembled, 'precondition') === false) return null;
