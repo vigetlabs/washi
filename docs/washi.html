@@ -163,7 +163,7 @@ invoking Washi upon that object.</p>
 <span class="hljs-keyword">var</span> result    = _.result;
 <span class="hljs-keyword">var</span> testMixin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./src/testMixin'</span>);
 
-<span class="hljs-keyword">var</span> Washi = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(component)</span> </span>{</pre></div></div>
+<span class="hljs-keyword">var</span> Washi = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -193,7 +193,7 @@ invoking Washi upon that object.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  _.extend(assembled, component);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  _.extend.apply(<span class="hljs-literal">null</span>, [ assembled ].concat(_.toArray(<span class="hljs-built_in">arguments</span>)));</pre></div></div>
             
         </li>
         
