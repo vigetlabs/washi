@@ -49,34 +49,6 @@ Corresponding with:
 </div>
 ```
 
-### Child components
-
-Washi defines children as other Washi components which layer on top of the including component. This means that mixins have their own `ui` and `event` objects. When instantiated, the parent component will instantiate a copy of all of its mixins with the same arguments.
-
-```javascript
-var Child  = {
-	ui: { selector: '#foo' }
-};
-
-var Parent = {
-	children: [ Child ]
-};
-
-var p = Washi(Parent);
-```
-
-### Conditionally applying mixins
-
-Mixins may be conditionally applied by providing a static `precondition` method to a component:
-
-```javascript
-var Mixin = {
-	precondition: function(options) {
-	    return true
-	}
-}
-```
-
 ## License
 
 `washi` is released under the [MIT License](http://opensource.org/licenses/MIT).
