@@ -26,4 +26,4 @@ module.exports = function(el, events, selectors, scope) {
   for (var name in events) {
     bindEvent(el, name, events[name], selectors, scope);
   }
-}
+};

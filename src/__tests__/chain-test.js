@@ -3,7 +3,7 @@ jest.autoMockOff();
 describe("Chain", function() {
   var chain = require('../chain');
 
-  it.only ("can produce a chainable API for a given object", function() {
+  it ("can produce a chainable API for a given object", function() {
     var obj  = { toCall: jest.genMockFunction() };
     var link = chain(obj);
 
@@ -12,7 +12,7 @@ describe("Chain", function() {
     expect(obj.toCall).toBeCalled();
   });
 
-  it.only ("chain.valueOf returns the tracked value", function() {
+  it ("chain.valueOf returns the tracked value", function() {
     var obj  = { toCall: jest.genMockFunction() };
     var link = chain(obj);
 

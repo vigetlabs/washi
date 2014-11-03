@@ -10,7 +10,7 @@ describe("Events", function() {
     el.dispatchEvent(event);
   }
 
-  describe("Events", function() {
+  describe("DOM Events", function() {
 
     it ("binds events to its element", function() {
       var m = Washi({

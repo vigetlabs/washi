@@ -34,6 +34,6 @@ var collection = whitelist.reduce(function(memo, method) {
 collection.isArray = Array.isArray;
 collection.toArray = function(list) {
   return _.slice.call(list, 0);
-}
+};
 
 module.exports = collection;

@@ -11,26 +11,31 @@ module.exports = function(target) {
   return function (value, scope) {
     var chain = {};
 
+    // Returns a function that will execute a given method
+    // upon the `value`, reassigning `value if the result
+    // of the function is defined.
+    var getChainable = function(method) {
+      return function() {
+        var args = _.toArray(arguments);
+
+        args.unshift(value);
+
+        var result = method.apply(scope, args);
+
+        if (!isUndefined(result)) {
+          value = result;
+        }
+
+        return chain;
+      };
+    };
+
     // Extend the chain object with the members of the target. This process
     // is similar to how `./collection.js` is built however the returned
     // result of each invocation is the chain itself.
     for (var d in target) {
-      chain[d] = (function(method) {
-        return function() {
-          var args = _.toArray(arguments);
-
-          args.unshift(value);
-
-          var result = method.apply(scope, args);
-
-          if (!isUndefined(result)) {
-            value = result;
-          }
-
-          return chain;
-        }
-      }(target[d]));
-    };
+      chain[d] = getChainable(target[d]);
+    }
 
     // `chain.valueOf` allows the retrieval of the source value
     chain.valueOf = function() {
@@ -40,4 +45,4 @@ module.exports = function(target) {
     return chain;
   };
 
-};
+}

@@ -39,8 +39,8 @@
               </a>
             
               
-              <a class="source" href="hasOwnProperty.html">
-                hasOwnProperty.js
+              <a class="source" href="has.html">
+                has.js
               </a>
             
               
@@ -56,6 +56,11 @@
               
               <a class="source" href="isObject.html">
                 isObject.js
+              </a>
+            
+              
+              <a class="source" href="isRegExp.html">
+                isRegExp.js
               </a>
             
               
@@ -154,7 +159,7 @@
             
             <div class="content"><div class='highlight'><pre>
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
-  <span class="hljs-keyword">return</span> obj == <span class="hljs-literal">null</span>;
+  <span class="hljs-keyword">return</span> obj === <span class="hljs-literal">null</span> || obj === <span class="hljs-literal">undefined</span>;
 };</pre></div></div>
             
         </li>

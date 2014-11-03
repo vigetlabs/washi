@@ -15,10 +15,7 @@ module.exports = function(el, ui) {
   for (var component in ui) {
     Object.defineProperty(assignments, component, {
       enumerable : true,
-
-      get: function() {
-        return queryAll(el, ui[component]);
-      }
+      get: queryAll.bind(null, el, ui[component])
     });
   }
 

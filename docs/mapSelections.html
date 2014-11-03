@@ -39,8 +39,8 @@
               </a>
             
               
-              <a class="source" href="hasOwnProperty.html">
-                hasOwnProperty.js
+              <a class="source" href="has.html">
+                has.js
               </a>
             
               
@@ -56,6 +56,11 @@
               
               <a class="source" href="isObject.html">
                 isObject.js
+              </a>
+            
+              
+              <a class="source" href="isRegExp.html">
+                isRegExp.js
               </a>
             
               
@@ -178,10 +183,7 @@ within the context of this View’s element</p>
             <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> component <span class="hljs-keyword">in</span> ui) {
     <span class="hljs-built_in">Object</span>.defineProperty(assignments, component, {
       enumerable : <span class="hljs-literal">true</span>,
-
-      get: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">return</span> queryAll(el, ui[component]);
-      }
+      get: queryAll.bind(<span class="hljs-literal">null</span>, el, ui[component])
     });
   }
 

@@ -6,12 +6,12 @@
 //      hasOwnProperty(null, 'foo') // => false
 //      hasOwnProperty({ foo: 'bar' }, 'foo') // => true
 
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var isBlank        = require('./isBlank');
+var has     = Object.prototype.hasOwnProperty;
+var isBlank = require('./isBlank');
 
 module.exports = function(obj, prop) {
   // If the object is blank, just return false. Otherwise check for membership.
   // This prevents errors where `null` or `undefined` are accidentally
   // provided to hasOwnProperty
-  return isBlank(obj) ? false : hasOwnProperty.call(obj, prop);
-}
+  return isBlank(obj) ? false : has.call(obj, prop);
+};

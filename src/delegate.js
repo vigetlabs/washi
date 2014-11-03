@@ -17,8 +17,7 @@ var delegate = function (el, type, selector, fn, capture) {
       fn.call(el, e);
     }
   }, capture);
-}
-
+};
 
 module.exports = function (el, type, selector, fn, capture) {
   if (isString(selector)) {

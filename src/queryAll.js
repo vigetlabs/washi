@@ -44,4 +44,4 @@ var queryAll = function(el, selector) {
   return query ? _.slice(query, 0) : [];
 };
 
-module.exports = queryAll
+module.exports = queryAll;

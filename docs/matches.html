@@ -39,8 +39,8 @@
               </a>
             
               
-              <a class="source" href="hasOwnProperty.html">
-                hasOwnProperty.js
+              <a class="source" href="has.html">
+                has.js
               </a>
             
               
@@ -56,6 +56,11 @@
               
               <a class="source" href="isObject.html">
                 isObject.js
+              </a>
+            
+              
+              <a class="source" href="isRegExp.html">
+                isRegExp.js
               </a>
             
               
@@ -157,11 +162,7 @@ This uses the native Element.matches API when possible.</p>
             
             <div class="content"><div class='highlight'><pre>
 <span class="hljs-keyword">var</span> proto  = Element.prototype;
-<span class="hljs-keyword">var</span> vendor = proto.matchesSelector
-           || proto.webkitMatchesSelector
-           || proto.mozMatchesSelector
-           || proto.msMatchesSelector
-           || proto.oMatchesSelector;
+<span class="hljs-keyword">var</span> vendor = proto.matchesSelector || proto.webkitMatchesSelector || proto.mozMatchesSelector || proto.msMatchesSelector || proto.oMatchesSelector;
 
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">match</span><span class="hljs-params">(el, selector)</span> </span>{</pre></div></div>
             

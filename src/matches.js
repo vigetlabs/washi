@@ -6,11 +6,7 @@
 //     matches(document.body, 'body') // => true
 
 var proto  = Element.prototype;
-var vendor = proto.matchesSelector
-           || proto.webkitMatchesSelector
-           || proto.mozMatchesSelector
-           || proto.msMatchesSelector
-           || proto.oMatchesSelector;
+var vendor = proto.matchesSelector || proto.webkitMatchesSelector || proto.mozMatchesSelector || proto.msMatchesSelector || proto.oMatchesSelector;
 
 module.exports = function match(el, selector) {
   // Element.matches is still a newer feature, so it must be identified

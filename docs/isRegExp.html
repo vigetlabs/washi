@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>delegate.js</title>
+  <title>isRegExp.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -141,7 +141,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>delegate.js</h1>
+                  <h1>isRegExp.js</h1>
               </div>
           </li>
         
@@ -153,76 +153,13 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p>Handles event binding, be it through delegation or otherwise.</p>
-<p>Example: delegate(window, ‘resize’, callback);
-Example: delegate(document.body, ‘click’, ‘main’, callback);</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> event    = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dom-event'</span>);
-<span class="hljs-keyword">var</span> matches  = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./matches'</span>);
-<span class="hljs-keyword">var</span> isString = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isString'</span>);
-
-<span class="hljs-keyword">var</span> delegate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el, type, selector, fn, capture)</span> </span>{</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
               
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <p>Add an event binding who’s callback first checks to identify
-if the target element matches the given selector</p>
-
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> event.on(el, type, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
-    <span class="hljs-keyword">var</span> target = e.target || e.srcElement;
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> toString = {}.toString;
 
-    <span class="hljs-keyword">if</span> (matches(target, selector)) {
-      fn.call(el, e);
-    }
-  }, capture);
-};
-
-<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el, type, selector, fn, capture)</span> </span>{
-  <span class="hljs-keyword">if</span> (isString(selector)) {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              <p>If given a string selector, this function will perform delegation.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> delegate(el, type, selector, fn, capture);
-  } <span class="hljs-keyword">else</span> {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Otherwise it performs standard event binding</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> event(el, type, fn, capture);
-  }
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
+  <span class="hljs-keyword">return</span> toString.call(value) === <span class="hljs-string">'[object RegExp]'</span>;
 };</pre></div></div>
             
         </li>

@@ -39,8 +39,8 @@
               </a>
             
               
-              <a class="source" href="hasOwnProperty.html">
-                hasOwnProperty.js
+              <a class="source" href="has.html">
+                has.js
               </a>
             
               
@@ -56,6 +56,11 @@
               
               <a class="source" href="isObject.html">
                 isObject.js
+              </a>
+            
+              
+              <a class="source" href="isRegExp.html">
+                isRegExp.js
               </a>
             
               
@@ -153,10 +158,10 @@ This is used to prefilter mixins that are not valid for a given setting.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> hasOwnProperty = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./hasOwnProperty'</span>);
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> has = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./has'</span>);
 
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(mixin, options)</span> </span>{
-  <span class="hljs-keyword">return</span> (hasOwnProperty(mixin, <span class="hljs-string">'precondition'</span>) ? mixin.precondition(options) : <span class="hljs-literal">true</span>) !== <span class="hljs-literal">false</span>;
+  <span class="hljs-keyword">return</span> (has(mixin, <span class="hljs-string">'precondition'</span>) ? mixin.precondition(options) : <span class="hljs-literal">true</span>) !== <span class="hljs-literal">false</span>;
 };</pre></div></div>
             
         </li>

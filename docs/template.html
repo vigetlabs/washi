@@ -39,8 +39,8 @@
               </a>
             
               
-              <a class="source" href="hasOwnProperty.html">
-                hasOwnProperty.js
+              <a class="source" href="has.html">
+                has.js
               </a>
             
               
@@ -56,6 +56,11 @@
               
               <a class="source" href="isObject.html">
                 isObject.js
+              </a>
+            
+              
+              <a class="source" href="isRegExp.html">
+                isRegExp.js
               </a>
             
               
@@ -157,11 +162,9 @@ template(<span class="hljs-string">'{foo}'</span>) <span class="hljs-comment">//
 </code></pre>
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> isBlank = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isBlank'</span>);
-<span class="hljs-keyword">var</span> result  = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./result'</span>);
-
-<span class="hljs-keyword">var</span> template = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(string, pool)</span> </span>{
-  <span class="hljs-keyword">if</span> (isBlank(pool)) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> isBlank  = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isBlank'</span>);
+<span class="hljs-keyword">var</span> isRegExp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isRegExp'</span>);
+<span class="hljs-keyword">var</span> result   = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./result'</span>);</pre></div></div>
             
         </li>
         
@@ -172,12 +175,13 @@ template(<span class="hljs-string">'{foo}'</span>) <span class="hljs-comment">//
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Don’t match values if there’s nothing to replace</p>
+              <p>The template function will use this pattern to match values</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> string;
-  }</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> pattern = <span class="hljs-regexp">/(?:\{*)([^{}\n]+)(?:\}*)/g</span>;
+
+<span class="hljs-keyword">var</span> template = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(string, pool)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -188,16 +192,13 @@ template(<span class="hljs-string">'{foo}'</span>) <span class="hljs-comment">//
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Otherwise get all instances of template logic and replace them
-as they are assigned within the given pool of values.</p>
-<p>If the result of accessing the property is blank, return the whole value</p>
+              <p>Don’t match values if there’s nothing to replace</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> string.replace(result(template, <span class="hljs-string">'pattern'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(whole, capture)</span> </span>{
-    <span class="hljs-keyword">return</span> result(pool, capture.trim(), whole);
-  });
-}</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (isBlank(pool)) {
+    <span class="hljs-keyword">return</span> string;
+  }</pre></div></div>
             
         </li>
         
@@ -208,11 +209,45 @@ as they are assigned within the given pool of values.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
+              <p>Otherwise replace all instances of <code>{key}</code> with the value
+of the passed <code>pool</code> argument. If a key doesn’t exist, then
+just return the whole match.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> string.replace(pattern, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(whole, capture)</span> </span>{
+    <span class="hljs-keyword">return</span> result(pool, capture.trim(), whole);
+  });
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
               <p>Expose the templating pattern so that it can be overriden</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>template.pattern = <span class="hljs-regexp">/(?:\{*)([^{}\n]+)(?:\}*)/g</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">Object</span>.defineProperty(template, <span class="hljs-string">'pattern'</span>, {
+
+  get: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> pattern;
+  },
+
+  set: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(newPattern)</span> </span>{
+    <span class="hljs-keyword">if</span> (isRegExp(newPattern)) {
+      pattern = newPattern;
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">'template.setPattern expects a regular expression'</span>);
+    }
+  }
+
+});
 
 <span class="hljs-built_in">module</span>.exports = template;</pre></div></div>
             

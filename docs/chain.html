@@ -39,8 +39,8 @@
               </a>
             
               
-              <a class="source" href="hasOwnProperty.html">
-                hasOwnProperty.js
+              <a class="source" href="has.html">
+                has.js
               </a>
             
               
@@ -56,6 +56,11 @@
               
               <a class="source" href="isObject.html">
                 isObject.js
+              </a>
+            
+              
+              <a class="source" href="isRegExp.html">
+                isRegExp.js
               </a>
             
               
@@ -185,28 +190,26 @@ This way, additional chains do not mutate the state of other chains.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Extend the chain object with the members of the target. This process
-is similar to how <code>./collection.js</code> is built however the returned
-result of each invocation is the chain itself.</p>
+              <p>Returns a function that will execute a given method
+upon the <code>value</code>, reassigning `value if the result
+of the function is defined.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> d <span class="hljs-keyword">in</span> target) {
-      chain[d] = (<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(method)</span> </span>{
-        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-          <span class="hljs-keyword">var</span> args = _.toArray(<span class="hljs-built_in">arguments</span>);
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> getChainable = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(method)</span> </span>{
+      <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">var</span> args = _.toArray(<span class="hljs-built_in">arguments</span>);
 
-          args.unshift(value);
+        args.unshift(value);
 
-          <span class="hljs-keyword">var</span> result = method.apply(scope, args);
+        <span class="hljs-keyword">var</span> result = method.apply(scope, args);
 
-          <span class="hljs-keyword">if</span> (!isUndefined(result)) {
-            value = result;
-          }
-
-          <span class="hljs-keyword">return</span> chain;
+        <span class="hljs-keyword">if</span> (!isUndefined(result)) {
+          value = result;
         }
-      }(target[d]));
+
+        <span class="hljs-keyword">return</span> chain;
+      };
     };</pre></div></div>
             
         </li>
@@ -217,6 +220,25 @@ result of each invocation is the chain itself.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Extend the chain object with the members of the target. This process
+is similar to how <code>./collection.js</code> is built however the returned
+result of each invocation is the chain itself.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> d <span class="hljs-keyword">in</span> target) {
+      chain[d] = getChainable(target[d]);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p><code>chain.valueOf</code> allows the retrieval of the source value</p>
 
@@ -229,7 +251,7 @@ result of each invocation is the chain itself.</p>
     <span class="hljs-keyword">return</span> chain;
   };
 
-};</pre></div></div>
+}</pre></div></div>
             
         </li>
         
