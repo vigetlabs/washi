@@ -23,15 +23,14 @@ var Sample = {
     },
 
     initialize: function(options) {
-        this.ui.title.map(function(e) {
-          return e.innerHTML = 'Washi is for Origami';
+        this.ui.title.forEach(function(e) {
+          e.innerHTML = 'Washi is for Origami';
         });
     },
 
     doSomething: function() {
-        this.ui.title.forEach(function(e) {
-          console.log(e.innerHTML);
-        });
+      var text = this.ui.title.pluck('innerHTML').join(' ').valueOf();
+      console.log(text);
     },
 
     doSomethingElse: function() {
