@@ -17,6 +17,7 @@ extend(Util, collection, {
   has            : require('./has'),
   query          : require('./query'),
   queryAll       : require('./queryAll'),
+  invoke         : require('./invoke'),
   isBlank        : require('./isBlank'),
   isDOM          : require('is-dom'),
   isFunction     : require('./isFunction'),
