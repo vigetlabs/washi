@@ -25,7 +25,6 @@ extend(Util, collection, {
   isString       : require('./isString'),
   isUndefined    : require('./isUndefined'),
   mapEvents      : require('./mapEvents'),
-  mapSelections  : require('./mapSelections'),
   matches        : require('./matches'),
   off            : require('dom-event'),
   on             : require('./delegate'),

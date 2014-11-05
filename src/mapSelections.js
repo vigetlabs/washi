@@ -4,8 +4,8 @@
 // For example:
 //
 //     mapSelection(document.body, { paragraphs: 'p', links: 'a' });
-
 var queryAll = require('./queryAll');
+var util     = require('./util');
 
 module.exports = function(el, ui) {
   var assignments = {};
@@ -13,10 +13,7 @@ module.exports = function(el, ui) {
   // For each attribute, perform a selection
   // within the context of this View's element
   for (var component in ui) {
-    Object.defineProperty(assignments, component, {
-      enumerable : true,
-      get: queryAll.bind(null, el, ui[component])
-    });
+    assignments[component] = util.chain(el).queryAll(ui[component]);
   }
 
   return assignments;

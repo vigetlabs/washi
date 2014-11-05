@@ -46,7 +46,7 @@ describe("Events", function() {
         finished: jest.genMockFunction()
       });
 
-      click(m.ui.child[0]);
+      click(m.ui.child.valueOf()[0]);
 
       expect(m.finished).toBeCalled();
       expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
@@ -68,7 +68,7 @@ describe("Events", function() {
         finished: jest.genMockFunction()
       });
 
-      click(m.ui.child[0]);
+      click(m.ui.child.valueOf()[0]);
 
       expect(m.finished).toBeCalled();
       expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
@@ -90,7 +90,7 @@ describe("Events", function() {
         finished: jest.genMockFunction()
       });
 
-      click(m.ui.child[0]);
+      click(m.ui.child.valueOf()[0]);
 
       expect(m.finished).toBeCalled();
       expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')

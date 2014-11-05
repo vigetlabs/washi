@@ -38,7 +38,7 @@ describe("Selection", function() {
         }
       });
 
-      expect(m.ui.child[0].tagName).toEqual('P');
+      expect(m.ui.child.valueOf()[0].tagName).toEqual('P');
     });
   });
 });
