@@ -4,6 +4,10 @@ var collection = require('./collection');
 
 // Util is a function that returns the result of calling `chain` upon a given value and scope.
 var Util = function(value, scope) {
+  if (Util.isString(value)) {
+    value = Util.queryAll(value);
+  }
+
   return Util.chain(value, scope);
 };
 
@@ -26,6 +30,7 @@ extend(Util, collection, {
   isString       : require('./isString'),
   isUndefined    : require('./isUndefined'),
   mapEvents      : require('./mapEvents'),
+  mapSelections  : require('./mapSelections'),
   matches        : require('./matches'),
   off            : require('dom-event'),
   on             : require('./delegate'),

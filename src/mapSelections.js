@@ -13,7 +13,7 @@ module.exports = function(el, ui) {
   // For each attribute, perform a selection
   // within the context of this View's element
   for (var component in ui) {
-    assignments[component] = util.chain(el).queryAll(ui[component]);
+    assignments[component] = queryAll(ui[component]);
   }
 
   return assignments;

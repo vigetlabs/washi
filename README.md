@@ -7,6 +7,7 @@ washi
 
 ```javascript
 var Washi = require('washi');
+var $     = Washi.$;
 
 var Sample = {
 
@@ -29,7 +30,7 @@ var Sample = {
     },
 
     doSomething: function() {
-      var text = this.ui.title.pluck('innerHTML').join(' ').valueOf();
+      var text = $.pluck(this.ui.title, 'innerHTML').join(' ');
       console.log(text);
     },
 

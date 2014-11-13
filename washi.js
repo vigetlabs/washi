@@ -8,8 +8,8 @@
 // and React. You build washi components by constructing objects with a given
 // pattern, then invoking Washi upon that object.
 
-var _             = require('./src/util');
-var result        = _.result;
+var $             = require('./src/util');
+var result        = $.result;
 var mapSelections = require('./src/mapSelections');
 
 var Washi = function() {
@@ -17,21 +17,21 @@ var Washi = function() {
   var assembled = Object.create(Washi.prototype);
 
   // Fold in all "mixins"
-  _.extend.apply(null, [ assembled ].concat(_.toArray(arguments)));
+  $.extend.apply(null, [ assembled ].concat($.toArray(arguments)));
 
   // Verify our element exists
-  assembled.el  = _.query(result(assembled, 'el', document.body));
+  assembled.el = $.query(result(assembled, 'el', document.body));
 
   // Bind events. Taken the target `el` and assign `events` to it, using `ui` when running
   // the `template` function upon the event declarations.
-  _.mapEvents(assembled.el, result(assembled, 'events'), result(assembled, 'ui'), assembled);
+  $.mapEvents(assembled.el, result(assembled, 'events'), result(assembled, 'ui'), assembled);
 
   // Next, reassign the UI object using `mapSelections` to construct getters that return
   // query selections.
-  assembled.ui = mapSelections(assembled.el, result(assembled, 'ui'));
+  assembled.ui = $.mapSelections(assembled.el, result(assembled, 'ui'));
 
   // Setup a selector helper method, a short hand similar to Backbone's `View.$`
-  assembled.$ = _(assembled.el);
+  assembled.$ = $(assembled.el);
 
   // Call the initialize method on the object. This is useful as a pseudo
   // replacement for the constructor function
@@ -41,6 +41,6 @@ var Washi = function() {
 };
 
 // Expose the utility helpers. Assigned to $ for familiarity with Backbone Views.
-Washi.$ = _;
+Washi.$ = $;
 
 module.exports = Washi;
