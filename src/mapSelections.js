@@ -14,6 +14,7 @@ module.exports = function(el, ui) {
   // within the context of this View's element
   for (var component in ui) {
     assignments[component] = queryAll(el, ui[component]);
+    assignments['$' + component] = util(assignments[component]);
   }
 
   return assignments;

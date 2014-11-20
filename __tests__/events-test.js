@@ -34,11 +34,8 @@ describe("Events", function() {
       var m = Washi({
         el: function() {
           var div = document.createElement('div');
-          div.innerHTML = "<p>Test</p>";
+          div.innerHTML = "<p><span>Test</span></p>";
           return div;
-        },
-        ui: {
-          child: 'p'
         },
         events: {
           'click p': 'finished'
@@ -46,10 +43,11 @@ describe("Events", function() {
         finished: jest.genMockFunction()
       });
 
-      click(m.ui.child[0]);
+      click(m.el.querySelector('span'));
 
       expect(m.finished).toBeCalled();
-      expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
+
+      expect(m.finished.mock.calls[0][0].target.tagName).toEqual('SPAN');
     });
 
     it ("can alias event names using the ui object", function() {
@@ -68,7 +66,7 @@ describe("Events", function() {
         finished: jest.genMockFunction()
       });
 
-      click(m.ui.child[0]);
+      click(m.ui.$child.get(0));
 
       expect(m.finished).toBeCalled();
       expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
@@ -90,7 +88,7 @@ describe("Events", function() {
         finished: jest.genMockFunction()
       });
 
-      click(m.ui.child[0]);
+      click(m.ui.$child.get(0));
 
       expect(m.finished).toBeCalled();
       expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')

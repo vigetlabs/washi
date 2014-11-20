@@ -4,6 +4,7 @@
 
 var isUndefined = require('./isUndefined');
 var _           = require('./collection');
+var result      = require('./result');
 
 module.exports = function(target) {
   // Return a scoped function so each fork of a chain has its own working value
@@ -40,6 +41,12 @@ module.exports = function(target) {
     // `chain.valueOf` allows the retrieval of the source value
     chain.valueOf = function() {
       return value;
+    };
+
+    // Allows the retrieval of a specific key in the source value
+    // with an optional fallback
+    chain.get = function (key, fallback) {
+      return result(value, key, fallback);
     };
 
     return chain;

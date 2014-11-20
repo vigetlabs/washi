@@ -20,7 +20,8 @@ var Washi = function() {
   $.extend.apply(null, [ assembled ].concat($.toArray(arguments)));
 
   // Verify our element exists
-  assembled.el = $.query(result(assembled, 'el', document.body));
+  assembled.el  = $.query(result(assembled, 'el', document.body));
+  assembled.$el = $(assembled.el);
 
   // Bind events. Taken the target `el` and assign `events` to it, using `ui` when running
   // the `template` function upon the event declarations.
@@ -28,7 +29,7 @@ var Washi = function() {
 
   // Next, reassign the UI object using `mapSelections` to construct getters that return
   // query selections.
-  assembled.ui = $.mapSelections(assembled.el, result(assembled, 'ui'));
+  assembled.ui = mapSelections(assembled.el, result(assembled, 'ui'));
 
   // Setup a selector helper method, a short hand similar to Backbone's `View.$`
   assembled.$ = $(assembled.el);

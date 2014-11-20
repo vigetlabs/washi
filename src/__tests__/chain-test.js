@@ -33,4 +33,14 @@ describe("Chain", function() {
     expect(value).toEqual('initial');
   });
 
+  it ("can retrieve a specific value", function() {
+    var value = chain({})([1,2,3]).get(0);
+    expect(value).toEqual(1);
+  });
+
+  it ("can return a fallback when retrieving a specific value", function() {
+    var value = chain({})([1,2,3]).get(10, 'empty');
+    expect(value).toEqual('empty');
+  });
+
 });
