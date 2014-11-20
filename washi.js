@@ -9,7 +9,7 @@
 // pattern, then invoking Washi upon that object.
 
 var $             = require('./src/util');
-var result        = $.result;
+var result        = require('./src/result');
 var mapSelections = require('./src/mapSelections');
 
 var Washi = function() {
