@@ -44,6 +44,11 @@
               </a>
             
               
+              <a class="source" href="invoke.html">
+                invoke.js
+              </a>
+            
+              
               <a class="source" href="isBlank.html">
                 isBlank.js
               </a>
@@ -89,6 +94,11 @@
               </a>
             
               
+              <a class="source" href="pluck.html">
+                pluck.js
+              </a>
+            
+              
               <a class="source" href="query.html">
                 query.js
               </a>
@@ -111,11 +121,6 @@
               
               <a class="source" href="template.html">
                 template.js
-              </a>
-            
-              
-              <a class="source" href="testMixin.html">
-                testMixin.js
               </a>
             
               
@@ -160,8 +165,8 @@ with getters that select upon a given element.</p>
 </code></pre>
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> queryAll = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./queryAll'</span>);
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> queryAll = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./queryAll'</span>);
+<span class="hljs-keyword">var</span> util     = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./util'</span>);
 
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el, ui)</span> </span>{
   <span class="hljs-keyword">var</span> assignments = {};</pre></div></div>
@@ -181,10 +186,8 @@ within the context of this View’s element</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> component <span class="hljs-keyword">in</span> ui) {
-    <span class="hljs-built_in">Object</span>.defineProperty(assignments, component, {
-      enumerable : <span class="hljs-literal">true</span>,
-      get: queryAll.bind(<span class="hljs-literal">null</span>, el, ui[component])
-    });
+    assignments[component] = queryAll(el, ui[component]);
+    assignments[<span class="hljs-string">'$'</span> + component] = util(assignments[component]);
   }
 
   <span class="hljs-keyword">return</span> assignments;

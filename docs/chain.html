@@ -44,6 +44,11 @@
               </a>
             
               
+              <a class="source" href="invoke.html">
+                invoke.js
+              </a>
+            
+              
               <a class="source" href="isBlank.html">
                 isBlank.js
               </a>
@@ -89,6 +94,11 @@
               </a>
             
               
+              <a class="source" href="pluck.html">
+                pluck.js
+              </a>
+            
+              
               <a class="source" href="query.html">
                 query.js
               </a>
@@ -111,11 +121,6 @@
               
               <a class="source" href="template.html">
                 template.js
-              </a>
-            
-              
-              <a class="source" href="testMixin.html">
-                testMixin.js
               </a>
             
               
@@ -161,6 +166,7 @@
             <div class="content"><div class='highlight'><pre>
 <span class="hljs-keyword">var</span> isUndefined = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isUndefined'</span>);
 <span class="hljs-keyword">var</span> _           = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./collection'</span>);
+<span class="hljs-keyword">var</span> result      = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./result'</span>);
 
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(target)</span> </span>{</pre></div></div>
             
@@ -246,6 +252,24 @@ result of each invocation is the chain itself.</p>
             
             <div class="content"><div class='highlight'><pre>    chain.valueOf = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
       <span class="hljs-keyword">return</span> value;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Allows the retrieval of a specific key in the source value
+with an optional fallback</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    chain.get = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, fallback)</span> </span>{
+      <span class="hljs-keyword">return</span> result(value, key, fallback);
     };
 
     <span class="hljs-keyword">return</span> chain;

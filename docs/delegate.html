@@ -44,6 +44,11 @@
               </a>
             
               
+              <a class="source" href="invoke.html">
+                invoke.js
+              </a>
+            
+              
               <a class="source" href="isBlank.html">
                 isBlank.js
               </a>
@@ -89,6 +94,11 @@
               </a>
             
               
+              <a class="source" href="pluck.html">
+                pluck.js
+              </a>
+            
+              
               <a class="source" href="query.html">
                 query.js
               </a>
@@ -111,11 +121,6 @@
               
               <a class="source" href="template.html">
                 template.js
-              </a>
-            
-              
-              <a class="source" href="testMixin.html">
-                testMixin.js
               </a>
             
               
@@ -180,17 +185,22 @@ if the target element matches the given selector</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> event.on(el, type, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
-    <span class="hljs-keyword">var</span> target = e.target || e.srcElement;
-
+            <div class="content"><div class='highlight'><pre>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bubble</span><span class="hljs-params">(target, e)</span> </span>{
     <span class="hljs-keyword">if</span> (matches(target, selector)) {
-      fn.call(el, e);
+      fn.call(target, e);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (target.parentNode !== el) {
+      bubble(target.parentNode, e);
     }
+  }
+
+  <span class="hljs-keyword">return</span> event.on(el, type, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
+    bubble(e.target || e.srcElement, e);
   }, capture);
 };
 
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el, type, selector, fn, capture)</span> </span>{
-  <span class="hljs-keyword">if</span> (isString(selector)) {</pre></div></div>
+  <span class="hljs-keyword">if</span> (isString(selector) &amp;&amp; selector.length &gt; <span class="hljs-number">0</span>) {</pre></div></div>
             
         </li>
         
@@ -201,7 +211,7 @@ if the target element matches the given selector</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>If given a string selector, this function will perform delegation.</p>
+              <p>If given a non-empty string selector, this function will perform delegation.</p>
 
             </div>
             

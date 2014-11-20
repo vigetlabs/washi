@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>has.js</title>
+  <title>invoke.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -146,7 +146,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>has.js</h1>
+                  <h1>invoke.js</h1>
               </div>
           </li>
         
@@ -158,19 +158,9 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p>Taken from Underscore, this is a predicate that identifies ownership of an attribute.</p>
-<p>For example:</p>
-<pre><code> hasOwnProperty({}, <span class="hljs-string">'foo'</span>) <span class="hljs-comment">// =&gt; false</span>
- hasOwnProperty(<span class="hljs-literal">null</span>, <span class="hljs-string">'foo'</span>) <span class="hljs-comment">// =&gt; false</span>
- hasOwnProperty({ foo: <span class="hljs-string">'bar'</span> }, <span class="hljs-string">'foo'</span>) <span class="hljs-comment">// =&gt; true</span>
-</code></pre>
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> has     = <span class="hljs-built_in">Object</span>.prototype.hasOwnProperty;
-<span class="hljs-keyword">var</span> isBlank = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isBlank'</span>);
+              <p>Execute a command on each member of a list;</p>
 
-<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj, prop)</span> </span>{</pre></div></div>
+            </div>
             
         </li>
         
@@ -181,13 +171,19 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>If the object is blank, just return false. Otherwise check for membership.
-This prevents errors where <code>null</code> or <code>undefined</code> are accidentally
-provided to hasOwnProperty</p>
-
+              <p>For example:</p>
+<pre><code>invoke([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span> ], <span class="hljs-string">'toString'</span>)
+</code></pre>
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> isBlank(obj) ? <span class="hljs-literal">false</span> : has.call(obj, prop);
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./collection'</span>);
+
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(list, property)</span> </span>{
+  <span class="hljs-keyword">var</span> args = _.slice(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">2</span>);
+
+  <span class="hljs-keyword">return</span> list.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span> </span>{
+    <span class="hljs-keyword">return</span> item[property].apply(item, args);
+  });
 };</pre></div></div>
             
         </li>

@@ -44,6 +44,11 @@
               </a>
             
               
+              <a class="source" href="invoke.html">
+                invoke.js
+              </a>
+            
+              
               <a class="source" href="isBlank.html">
                 isBlank.js
               </a>
@@ -89,6 +94,11 @@
               </a>
             
               
+              <a class="source" href="pluck.html">
+                pluck.js
+              </a>
+            
+              
               <a class="source" href="query.html">
                 query.js
               </a>
@@ -111,11 +121,6 @@
               
               <a class="source" href="template.html">
                 template.js
-              </a>
-            
-              
-              <a class="source" href="testMixin.html">
-                testMixin.js
               </a>
             
               
@@ -174,6 +179,10 @@
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Util = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value, scope)</span> </span>{
+  <span class="hljs-keyword">if</span> (Util.isString(value)) {
+    value = Util.queryAll(value);
+  }
+
   <span class="hljs-keyword">return</span> Util.chain(value, scope);
 };</pre></div></div>
             
@@ -196,9 +205,10 @@ the chaining API.</p>
   chain          : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./chain'</span>)(Util),
   chainWith      : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./chain'</span>),
   extend         : extend,
+  has            : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./has'</span>),
   query          : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./query'</span>),
   queryAll       : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./queryAll'</span>),
-  has            : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./has'</span>),
+  invoke         : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./invoke'</span>),
   isBlank        : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isBlank'</span>),
   isDOM          : <span class="hljs-built_in">require</span>(<span class="hljs-string">'is-dom'</span>),
   isFunction     : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isFunction'</span>),
@@ -207,7 +217,6 @@ the chaining API.</p>
   isString       : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isString'</span>),
   isUndefined    : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isUndefined'</span>),
   mapEvents      : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./mapEvents'</span>),
-  mapSelections  : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./mapSelections'</span>),
   matches        : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./matches'</span>),
   off            : <span class="hljs-built_in">require</span>(<span class="hljs-string">'dom-event'</span>),
   on             : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./delegate'</span>),

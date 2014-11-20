@@ -44,6 +44,11 @@
               </a>
             
               
+              <a class="source" href="invoke.html">
+                invoke.js
+              </a>
+            
+              
               <a class="source" href="isBlank.html">
                 isBlank.js
               </a>
@@ -89,6 +94,11 @@
               </a>
             
               
+              <a class="source" href="pluck.html">
+                pluck.js
+              </a>
+            
+              
               <a class="source" href="query.html">
                 query.js
               </a>
@@ -111,11 +121,6 @@
               
               <a class="source" href="template.html">
                 template.js
-              </a>
-            
-              
-              <a class="source" href="testMixin.html">
-                testMixin.js
               </a>
             
               
@@ -157,18 +162,18 @@
 <p>by Viget
 <a href="https://github.com/vigetlabs/washi">https://github.com/vigetlabs/washi</a>
 <a href="https://viget.com">https://viget.com</a></p>
-<p>Washi is a DOM utility library with inspirations from Backbone and Underscore.
-You build washi components by constructing objects with a given pattern, then
-invoking Washi upon that object.</p>
+<p>Washi is a DOM utility library with inspirations from Backbone, Underscore,
+and React. You build washi components by constructing objects with a given
+pattern, then invoking Washi upon that object.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> _         = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./src/util'</span>);
-<span class="hljs-keyword">var</span> result    = _.result;
-<span class="hljs-keyword">var</span> testMixin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./src/testMixin'</span>);
+<span class="hljs-keyword">var</span> $             = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./src/util'</span>);
+<span class="hljs-keyword">var</span> result        = $.result;
+<span class="hljs-keyword">var</span> mapSelections = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./src/mapSelections'</span>);
 
-<span class="hljs-keyword">var</span> Washi = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{</pre></div></div>
+<span class="hljs-keyword">var</span> Washi = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -198,7 +203,7 @@ invoking Washi upon that object.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  _.extend.apply(<span class="hljs-literal">null</span>, [ assembled ].concat(_.toArray(<span class="hljs-built_in">arguments</span>)));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  $.extend.apply(<span class="hljs-literal">null</span>, [ assembled ].concat($.toArray(<span class="hljs-built_in">arguments</span>)));</pre></div></div>
             
         </li>
         
@@ -209,11 +214,12 @@ invoking Washi upon that object.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>If the precondition fails, don’t do anything</p>
+              <p>Verify our element exists</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (result(assembled, <span class="hljs-string">'precondition'</span>) === <span class="hljs-literal">false</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  assembled.el  = $.query(result(assembled, <span class="hljs-string">'el'</span>, <span class="hljs-built_in">document</span>.body));
+  assembled.$el = $(assembled.el);</pre></div></div>
             
         </li>
         
@@ -224,11 +230,12 @@ invoking Washi upon that object.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>Verify our element exists</p>
+              <p>Bind events. Taken the target <code>el</code> and assign <code>events</code> to it, using <code>ui</code> when running
+the <code>template</code> function upon the event declarations.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  assembled.el = _.query(result(assembled, <span class="hljs-string">'el'</span>, <span class="hljs-built_in">document</span>.body));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  $.mapEvents(assembled.el, result(assembled, <span class="hljs-string">'events'</span>), result(assembled, <span class="hljs-string">'ui'</span>), assembled);</pre></div></div>
             
         </li>
         
@@ -239,12 +246,12 @@ invoking Washi upon that object.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>Bind events. Taken the target <code>el</code> and assign <code>events</code> to it, using <code>ui</code> when running
-the <code>template</code> function upon the event declarations.</p>
+              <p>Next, reassign the UI object using <code>mapSelections</code> to construct getters that return
+query selections.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  _.mapEvents(assembled.el, result(assembled, <span class="hljs-string">'events'</span>), result(assembled, <span class="hljs-string">'ui'</span>), assembled);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  assembled.ui = mapSelections(assembled.el, result(assembled, <span class="hljs-string">'ui'</span>));</pre></div></div>
             
         </li>
         
@@ -255,12 +262,11 @@ the <code>template</code> function upon the event declarations.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>Next, reassign the UI object using <code>mapSelections</code> to construct getters that return
-query selections.</p>
+              <p>Setup a selector helper method, a short hand similar to Backbone’s <code>View.$</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  assembled.ui = _.mapSelections(assembled.el, result(assembled, <span class="hljs-string">'ui'</span>));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  assembled.$ = $(assembled.el);</pre></div></div>
             
         </li>
         
@@ -271,11 +277,15 @@ query selections.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>Setup a selector helper method, a short hand similar to Backbone’s <code>View.$</code></p>
+              <p>Call the initialize method on the object. This is useful as a pseudo
+replacement for the constructor function</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  assembled.$ = _(assembled.el);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  result(assembled, <span class="hljs-string">'initialize'</span>);
+
+  <span class="hljs-keyword">return</span> assembled;
+};</pre></div></div>
             
         </li>
         
@@ -286,48 +296,11 @@ query selections.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>Call the initialize method on the object. This is useful as a pseudo
-replacement for the constructor function</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  result(assembled, <span class="hljs-string">'initialize'</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-10">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
-              </div>
-              <p>If there are any children, recurse through them and return a list of
-the resulting value.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (_.isArray(assembled.children)) {
-    assembled.children = assembled.children.filter(testMixin).map(Washi);
-  }
-
-  <span class="hljs-keyword">return</span> assembled;
-};</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-11">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
-              </div>
               <p>Expose the utility helpers. Assigned to $ for familiarity with Backbone Views.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>Washi.$ = _;
+            <div class="content"><div class='highlight'><pre>Washi.$ = $;
 
 <span class="hljs-built_in">module</span>.exports = Washi;</pre></div></div>
             
