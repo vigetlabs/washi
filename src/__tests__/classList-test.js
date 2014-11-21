@@ -46,4 +46,17 @@ describe('classList', function() {
     expect(el.classList.remove.mock.calls[0]).toEqual(['foo']);
   });
 
+  it ('can toggle a list of classes from an element if no third option is provided', function() {
+    var el = document.createElement('div');
+    var classList = require('../classList');
+
+    el.classList = {
+      toggle: jest.genMockFunction()
+    };
+
+    classList.toggleClass(el, 'foo');
+
+    expect(el.classList.toggle.mock.calls[0]).toEqual(['foo']);
+  });
+
 });

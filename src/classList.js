@@ -28,10 +28,16 @@ var classList = {
   // Given an element and a string of classes, add or remove those classes
   // based upon a boolean
   toggleClass: function(el, classes, keep) {
-    if (keep) {
-      classList.addClass(el, classes);
+    if (isDOM(el) && arguments.length === 2) {
+      tokenize(classes).map(function(token) {
+        el.classList.toggle(token);
+      });
     } else {
-      classList.removeClass(el, classes);
+      if (keep) {
+        classList.addClass(el, classes);
+      } else {
+        classList.removeClass(el, classes);
+      }
     }
   }
 
