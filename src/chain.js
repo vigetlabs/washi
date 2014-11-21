@@ -6,7 +6,7 @@ var isUndefined = require('./isUndefined');
 var _           = require('./collection');
 var result      = require('./result');
 
-module.exports = function(target) {
+module.exports = function (target) {
   // Return a scoped function so each fork of a chain has its own working value
   // This way, additional chains do not mutate the state of other chains.
   return function (value, scope) {
@@ -52,4 +52,4 @@ module.exports = function(target) {
     return chain;
   };
 
-}
+};
