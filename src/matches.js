@@ -9,19 +9,19 @@ var proto  = Element.prototype;
 var vendor = proto.matchesSelector || proto.webkitMatchesSelector || proto.mozMatchesSelector || proto.msMatchesSelector || proto.oMatchesSelector;
 var isDOM  = require('is-dom');
 
+function isNotMatchable(value) {
+  return isDOM(value) === false || value === document;
+}
+
 module.exports = function match(el, selector) {
 
   // Always return false if the element provided is not a DOM Element
   // or is the document. This catches an illegal invocation error.
-  if (isDOM(el) === false || el === document) {
-    return false
-  }
+  if (isNotMatchable(el)) return false
 
   // Element.matches is still a newer feature, so it must be identified
   // that it is supported
-  if (vendor) {
-    return vendor.call(el, selector);
-  }
+  if (vendor) return vendor.call(el, selector);
 
   // Otherwise we traverse the tree
   var nodes = el.parentNode.querySelectorAll(selector);
