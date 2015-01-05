@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>has.js</title>
+  <title>classList.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -151,7 +151,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>has.js</h1>
+                  <h1>classList.js</h1>
               </div>
           </li>
         
@@ -163,19 +163,15 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p>Taken from Underscore, this is a predicate that identifies ownership of an attribute.</p>
-<p>For example:</p>
-<pre><code> hasOwnProperty({}, <span class="hljs-string">'foo'</span>) <span class="hljs-comment">// =&gt; false</span>
- hasOwnProperty(<span class="hljs-literal">null</span>, <span class="hljs-string">'foo'</span>) <span class="hljs-comment">// =&gt; false</span>
- hasOwnProperty({ foo: <span class="hljs-string">'bar'</span> }, <span class="hljs-string">'foo'</span>) <span class="hljs-comment">// =&gt; true</span>
-</code></pre>
+              <p>A collection of methods for manipulating classes.</p>
+
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> has     = <span class="hljs-built_in">Object</span>.prototype.hasOwnProperty;
-<span class="hljs-keyword">var</span> isBlank = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isBlank'</span>);
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> isDOM    = <span class="hljs-built_in">require</span>(<span class="hljs-string">'is-dom'</span>);
+<span class="hljs-keyword">var</span> tokenize = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./tokenize'</span>);
+<span class="hljs-keyword">var</span> result   = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./result'</span>);
 
-<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj, prop)</span> </span>{</pre></div></div>
+<span class="hljs-keyword">var</span> classList = {</pre></div></div>
             
         </li>
         
@@ -186,14 +182,72 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>If the object is blank, just return false. Otherwise check for membership.
-This prevents errors where <code>null</code> or <code>undefined</code> are accidentally
-provided to hasOwnProperty</p>
+              <p>Given an element and a string of classes, add those classes if
+the element is a DOM node</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> isBlank(obj) ? <span class="hljs-literal">false</span> : has.call(obj, prop);
-};</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  addClass: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el, classes)</span> </span>{
+    <span class="hljs-keyword">if</span> (isDOM(el)) {
+      tokenize(classes).map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(token)</span> </span>{
+        el.classList.add(token);
+      });
+    }
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Given an element and a string of classes, remove those classes if
+the element is a DOM node</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  removeClass: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el, classes)</span> </span>{
+    <span class="hljs-keyword">if</span> (isDOM(el)) {
+      tokenize(classes).map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(token)</span> </span>{
+        el.classList.remove(token);
+      });
+    }
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Given an element and a string of classes, add or remove those classes
+based upon a boolean</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  toggleClass: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el, classes, keep)</span> </span>{
+    <span class="hljs-keyword">if</span> (isDOM(el) &amp;&amp; <span class="hljs-built_in">arguments</span>.length === <span class="hljs-number">2</span>) {
+      tokenize(classes).map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(token)</span> </span>{
+        el.classList.toggle(token);
+      });
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">if</span> (keep) {
+        classList.addClass(el, classes);
+      } <span class="hljs-keyword">else</span> {
+        classList.removeClass(el, classes);
+      }
+    }
+  }
+
+};
+
+<span class="hljs-built_in">module</span>.exports = classList;</pre></div></div>
             
         </li>
         

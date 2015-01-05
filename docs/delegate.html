@@ -24,6 +24,11 @@
               </a>
             
               
+              <a class="source" href="classList.html">
+                classList.js
+              </a>
+            
+              
               <a class="source" href="collection.html">
                 collection.js
               </a>
@@ -168,6 +173,7 @@ Example: delegate(document.body, ‘click’, ‘main’, callback);</p>
 <span class="hljs-keyword">var</span> event    = <span class="hljs-built_in">require</span>(<span class="hljs-string">'dom-event'</span>);
 <span class="hljs-keyword">var</span> matches  = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./matches'</span>);
 <span class="hljs-keyword">var</span> isString = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isString'</span>);
+<span class="hljs-keyword">var</span> isDOM    = <span class="hljs-built_in">require</span>(<span class="hljs-string">'is-dom'</span>);
 
 <span class="hljs-keyword">var</span> delegate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(el, type, selector, fn, capture)</span> </span>{</pre></div></div>
             
@@ -185,11 +191,13 @@ if the target element matches the given selector</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bubble</span><span class="hljs-params">(target, e)</span> </span>{
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bubble</span><span class="hljs-params">(target, e)</span> </span>{
+    <span class="hljs-keyword">var</span> hasParent = isDOM(target.parentNode);
+    <span class="hljs-keyword">var</span> canBubble = target.parentNode !== el;
+
     <span class="hljs-keyword">if</span> (matches(target, selector)) {
       fn.call(target, e);
-    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (target.parentNode !== el) {
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (hasParent &amp;&amp; canBubble) {
       bubble(target.parentNode, e);
     }
   }
