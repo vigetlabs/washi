@@ -6,15 +6,18 @@
 var event    = require('dom-event');
 var matches  = require('./matches');
 var isString = require('./isString');
+var isDOM    = require('is-dom');
 
 var delegate = function (el, type, selector, fn, capture) {
   // Add an event binding who's callback first checks to identify
   // if the target element matches the given selector
-
   function bubble(target, e) {
+    var hasParent = isDOM(target.parentNode);
+    var canBubble = target.parentNode !== el;
+
     if (matches(target, selector)) {
       fn.call(target, e);
-    } else if (target.parentNode !== el) {
+    } else if (hasParent && canBubble) {
       bubble(target.parentNode, e);
     }
   }
