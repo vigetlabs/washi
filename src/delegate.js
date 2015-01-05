@@ -3,7 +3,7 @@
 // Example: delegate(window, 'resize', callback);
 // Example: delegate(document.body, 'click', 'main', callback);
 
-var event    = require('dom-event');
+var event    = require('./event');
 var matches  = require('./matches');
 var isString = require('./isString');
 var isDOM    = require('is-dom');

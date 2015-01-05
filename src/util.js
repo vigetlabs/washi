@@ -32,7 +32,7 @@ extend(Util, collection, classList, {
   isUndefined    : require('./isUndefined'),
   mapEvents      : require('./mapEvents'),
   matches        : require('./matches'),
-  off            : require('dom-event'),
+  off            : require('./event').off,
   on             : require('./delegate'),
   result         : require('./result'),
   tap            : require('./tap'),

@@ -27,7 +27,6 @@
     "webpack": "^1.4.15"
   },
   "dependencies": {
-    "dom-event": "0.0.4",
     "is-dom": "^1.0.4"
   }
 }

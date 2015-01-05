@@ -6,7 +6,7 @@ describe("Events", function() {
 
   function click (el) {
     var event = document.createEvent('MouseEvents');
-    event.initEvent('click', true, false );
+    event.initEvent('click', true, true);
     el.dispatchEvent(event);
   }
 
