@@ -7,20 +7,20 @@ describe("Selection", function() {
   var el = document.createElement("p");
 
   it ("has an `el`", function() {
-    var w = Washi({ el: el });
+    var w = Washi({ el: el }).get(0);
 
     expect(w.el === el).toBeTruthy();
   });
 
   it ("defaults `el` to document.body", function() {
-    var w = Washi();
+    var w = Washi().get(0);
     expect(w.el === document.body).toBeTruthy();
   });
 
   it ("has an extendable default view", function() {
     var m = Washi({
       el: document.createElement('p')
-    })
+    }).get(0);
 
     expect(m.el.tagName).toEqual("P");
   });
@@ -36,7 +36,7 @@ describe("Selection", function() {
         ui: {
           child: 'p'
         }
-      });
+      }).get(0);
 
       expect(m.ui.child[0].tagName).toEqual('P');
     });

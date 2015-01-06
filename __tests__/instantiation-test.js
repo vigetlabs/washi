@@ -7,7 +7,7 @@ describe("Instantiation", function() {
   it ("works with new", function() {
     var m = new Washi({
       el: document.createElement('button')
-    });
+    }).get(0)
 
     expect(m.el.tagName).toEqual('BUTTON');
   });
@@ -15,7 +15,7 @@ describe("Instantiation", function() {
   it ("works as a factory", function() {
     var m = Washi({
       el: document.createElement('button')
-    });
+    }).get(0)
 
     expect(m.el.tagName).toEqual('BUTTON');
   });
@@ -25,9 +25,17 @@ describe("Instantiation", function() {
       el: document.createElement('button')
     }, {
       el: document.createElement('a')
-    });
+    }).get(0);
 
     expect(m.el.tagName).toEqual('A');
+  });
+
+  it ("doesn't do anything if no element is found", function() {
+    var m = Washi({
+      el: '.blatenty-unselectable'
+    });
+
+    expect(m.valueOf().length).toEqual(0);
   });
 
 });

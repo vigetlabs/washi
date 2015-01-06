@@ -23,7 +23,7 @@ describe("Events", function() {
 
         finished: jest.genMockFunction()
 
-      });
+      }).get(0);
 
       click(m.el);
 
@@ -41,7 +41,7 @@ describe("Events", function() {
           'click p': 'finished'
         },
         finished: jest.genMockFunction()
-      });
+      }).get(0);
 
       click(m.el.querySelector('span'));
 
@@ -64,7 +64,7 @@ describe("Events", function() {
           'click {child}': 'finished'
         },
         finished: jest.genMockFunction()
-      });
+      }).get(0);
 
       click(m.ui.$child.get(0));
 
@@ -86,7 +86,7 @@ describe("Events", function() {
           'click { child }': 'finished'
         },
         finished: jest.genMockFunction()
-      });
+      }).get(0);
 
       click(m.ui.$child.get(0));
 

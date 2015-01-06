@@ -13,11 +13,19 @@ var result        = require('./src/result');
 var mapSelections = require('./src/mapSelections');
 
 var Washi = function() {
-  // Construct a new object, building from a given prototype
-  var assembled = Object.create(Washi.prototype);
+  var options   = $.extend.apply(null, [{}].concat($.toArray(arguments)));
+  var selection = $.queryAll(result(options, 'el', document.body));
 
-  // Fold in all "mixins"
-  $.extend.apply(null, [ assembled ].concat($.toArray(arguments)));
+  return Washi.$(selection).map(function(el) {
+    return factory(options, { el: el })
+  });
+};
+
+var factory = function() {
+  // Construct a new object, building from a given prototype and
+  // folding in all "mixins"
+  var options   = $.extend.apply(null, $.toArray(arguments));
+  var assembled = $.extend(Object.create(Washi.prototype), options);
 
   // Verify our element exists
   assembled.el  = $.query(result(assembled, 'el', document.body));
@@ -39,7 +47,7 @@ var Washi = function() {
   result(assembled, 'initialize');
 
   return assembled;
-};
+}
 
 // Expose the utility helpers. Assigned to $ for familiarity with Backbone Views.
 Washi.$ = $;
