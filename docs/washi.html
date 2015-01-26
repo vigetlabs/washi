@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="append.html">
+                append.js
+              </a>
+            
+              
               <a class="source" href="chain.html">
                 chain.js
               </a>
@@ -36,6 +41,11 @@
               
               <a class="source" href="delegate.html">
                 delegate.js
+              </a>
+            
+              
+              <a class="source" href="event.html">
+                event.js
               </a>
             
               
@@ -114,6 +124,11 @@
               </a>
             
               
+              <a class="source" href="remove.html">
+                remove.js
+              </a>
+            
+              
               <a class="source" href="result.html">
                 result.js
               </a>
@@ -178,7 +193,16 @@ pattern, then invoking Washi upon that object.</p>
 <span class="hljs-keyword">var</span> result        = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./src/result'</span>);
 <span class="hljs-keyword">var</span> mapSelections = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./src/mapSelections'</span>);
 
-<span class="hljs-keyword">var</span> Washi = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{</pre></div></div>
+<span class="hljs-keyword">var</span> Washi = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> options   = $.extend.apply(<span class="hljs-literal">null</span>, [{}].concat($.toArray(<span class="hljs-built_in">arguments</span>)));
+  <span class="hljs-keyword">var</span> selection = $.queryAll(result(options, <span class="hljs-string">'el'</span>, <span class="hljs-built_in">document</span>.body));
+
+  <span class="hljs-keyword">return</span> Washi.$(selection).map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(el)</span> </span>{
+    <span class="hljs-keyword">return</span> factory(options, { el: el })
+  });
+};
+
+<span class="hljs-keyword">var</span> factory = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{</pre></div></div>
             
         </li>
         
@@ -189,11 +213,13 @@ pattern, then invoking Washi upon that object.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Construct a new object, building from a given prototype</p>
+              <p>Construct a new object, building from a given prototype and
+folding in all “mixins”</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> assembled = <span class="hljs-built_in">Object</span>.create(Washi.prototype);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> options   = $.extend.apply(<span class="hljs-literal">null</span>, $.toArray(<span class="hljs-built_in">arguments</span>));
+  <span class="hljs-keyword">var</span> assembled = $.extend(<span class="hljs-built_in">Object</span>.create(Washi.prototype), options);</pre></div></div>
             
         </li>
         
@@ -203,21 +229,6 @@ pattern, then invoking Washi upon that object.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              <p>Fold in all “mixins”</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  $.extend.apply(<span class="hljs-literal">null</span>, [ assembled ].concat($.toArray(<span class="hljs-built_in">arguments</span>)));</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>Verify our element exists</p>
 
@@ -229,11 +240,11 @@ pattern, then invoking Washi upon that object.</p>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>Bind events. Taken the target <code>el</code> and assign <code>events</code> to it, using <code>ui</code> when running
 the <code>template</code> function upon the event declarations.</p>
@@ -245,11 +256,11 @@ the <code>template</code> function upon the event declarations.</p>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>Next, reassign the UI object using <code>mapSelections</code> to construct getters that return
 query selections.</p>
@@ -261,11 +272,11 @@ query selections.</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>Setup a selector helper method, a short hand similar to Backbone’s <code>View.$</code></p>
 
@@ -276,11 +287,11 @@ query selections.</p>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Call the initialize method on the object. This is useful as a pseudo
 replacement for the constructor function</p>
@@ -290,16 +301,16 @@ replacement for the constructor function</p>
             <div class="content"><div class='highlight'><pre>  result(assembled, <span class="hljs-string">'initialize'</span>);
 
   <span class="hljs-keyword">return</span> assembled;
-};</pre></div></div>
+}</pre></div></div>
             
         </li>
         
         
-        <li id="section-9">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Expose the utility helpers. Assigned to $ for familiarity with Backbone Views.</p>
 

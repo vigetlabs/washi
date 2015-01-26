@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="append.html">
+                append.js
+              </a>
+            
+              
               <a class="source" href="chain.html">
                 chain.js
               </a>
@@ -36,6 +41,11 @@
               
               <a class="source" href="delegate.html">
                 delegate.js
+              </a>
+            
+              
+              <a class="source" href="event.html">
+                event.js
               </a>
             
               
@@ -111,6 +121,11 @@
               
               <a class="source" href="queryAll.html">
                 queryAll.js
+              </a>
+            
+              
+              <a class="source" href="remove.html">
+                remove.js
               </a>
             
               
@@ -224,12 +239,28 @@ the chaining API.</p>
   isUndefined    : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./isUndefined'</span>),
   mapEvents      : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./mapEvents'</span>),
   matches        : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./matches'</span>),
-  off            : <span class="hljs-built_in">require</span>(<span class="hljs-string">'dom-event'</span>),
+  off            : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./event'</span>).off,
   on             : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./delegate'</span>),
   result         : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./result'</span>),
   tap            : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./tap'</span>),
   template       : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./template'</span>),
-  tokenize       : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./tokenize'</span>)
+  tokenize       : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./tokenize'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>DOM operations</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  append         : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./append'</span>),
+  remove         : <span class="hljs-built_in">require</span>(<span class="hljs-string">'./remove'</span>)
 });
 
 <span class="hljs-built_in">module</span>.exports = Util;</pre></div></div>

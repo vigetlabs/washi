@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>matches.js</title>
+  <title>append.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -166,7 +166,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>matches.js</h1>
+                  <h1>append.js</h1>
               </div>
           </li>
         
@@ -178,23 +178,10 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p>Given an element and selector, returns true of the selector matches.
-This uses the native Element.matches API when possible.</p>
-<p>For example:</p>
-<pre><code>matches(<span class="hljs-built_in">document</span>.body, <span class="hljs-string">'body'</span>) <span class="hljs-comment">// =&gt; true</span>
-</code></pre>
+              
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> proto  = Element.prototype;
-<span class="hljs-keyword">var</span> vendor = proto.matchesSelector || proto.webkitMatchesSelector || proto.mozMatchesSelector || proto.msMatchesSelector || proto.oMatchesSelector;
-<span class="hljs-keyword">var</span> isDOM  = <span class="hljs-built_in">require</span>(<span class="hljs-string">'is-dom'</span>);
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isNotMatchable</span><span class="hljs-params">(value)</span> </span>{
-  <span class="hljs-keyword">return</span> isDOM(value) === <span class="hljs-literal">false</span> || value === <span class="hljs-built_in">document</span>;
-}
-
-<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">match</span><span class="hljs-params">(el, selector)</span> </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> slice = <span class="hljs-built_in">Array</span>.prototype.slice;</pre></div></div>
             
         </li>
         
@@ -205,12 +192,12 @@ This uses the native Element.matches API when possible.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Always return false if the element provided is not a DOM Element
-or is the document. This catches an illegal invocation error.</p>
+              <p>A DOM operation helper. Append an Element to a parent</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (isNotMatchable(el)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> append = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(parent, a, b, c)</span> </span>{
+  <span class="hljs-keyword">var</span> children = slice.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">1</span>);</pre></div></div>
             
         </li>
         
@@ -221,34 +208,20 @@ or is the document. This catches an illegal invocation error.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Element.matches is still a newer feature, so it must be identified
-that it is supported</p>
+              <p>Always select the first item of a list, similarly to jQuery</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (vendor) <span class="hljs-keyword">return</span> vendor.call(el, selector);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Otherwise we traverse the tree</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> nodes = el.parentNode.querySelectorAll(selector);
-
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; nodes.length; ++i) {
-    <span class="hljs-keyword">if</span> (nodes[i] == el) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(parent)) {
+    parent = parent[<span class="hljs-number">0</span>];
   }
 
-  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-};</pre></div></div>
+  children.forEach(parent.appendChild, parent)
+
+  <span class="hljs-keyword">return</span> parent;
+};
+
+<span class="hljs-built_in">module</span>.exports = append;</pre></div></div>
             
         </li>
         

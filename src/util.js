@@ -37,7 +37,11 @@ extend(Util, collection, classList, {
   result         : require('./result'),
   tap            : require('./tap'),
   template       : require('./template'),
-  tokenize       : require('./tokenize')
+  tokenize       : require('./tokenize'),
+
+  // DOM operations
+  append         : require('./append'),
+  remove         : require('./remove')
 });
 
 module.exports = Util;
