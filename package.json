@@ -1,6 +1,6 @@
 {
   "name": "washi",
-  "version": "3.0.0-rc4",
+  "version": "3.0.0",
   "description": "One of many backbone-esque view helpers.",
   "main": "washi.js",
   "directories": {
