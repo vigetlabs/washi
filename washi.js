@@ -44,7 +44,9 @@ var factory = function() {
 
   // Call the initialize method on the object. This is useful as a pseudo
   // replacement for the constructor function
-  result(assembled, 'initialize');
+  if (typeof assembled.initialize === 'function') {
+    assembled.initialize(options);
+  }
 
   return assembled;
 }

@@ -22,9 +22,9 @@
   },
   "homepage": "https://github.com/vigetlabs/washi",
   "devDependencies": {
-    "docco": "^0.6.3",
-    "jest-cli": "^0.2.1",
-    "webpack": "^1.4.15"
+    "docco": "0.6.3",
+    "jest-cli": "0.2.1",
+    "webpack": "1.4.15"
   },
   "dependencies": {
     "is-dom": "^1.0.4"

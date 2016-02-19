@@ -38,4 +38,16 @@ describe("Instantiation", function() {
     expect(m.valueOf().length).toEqual(0);
   });
 
+  it ("receives the instantiation options", function() {
+    Washi({
+      el: document.createElement('button'),
+      prop: true,
+
+      initialize: function (options) {
+        expect(options.el.tagName).toEqual('BUTTON')
+        expect(options.prop).toEqual(true)
+      }
+    });
+  });
+
 });
