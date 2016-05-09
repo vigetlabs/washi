@@ -22,4 +22,9 @@ describe("Template", function() {
     expect(template(str)).toEqual(str);
   });
 
+  it ("only matches on the first instance", function() {
+    var str = '{foo} foo';
+    expect(template(str, { foo: 'bar' })).toEqual('bar foo');
+  });
+
 });

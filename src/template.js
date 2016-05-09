@@ -11,7 +11,7 @@ var isRegExp = require('./isRegExp');
 var result   = require('./result');
 
 // The template function will use this pattern to match values
-var pattern = /(?:\{*)([^{}\n]+)(?:\}*)/g;
+var pattern = /\{([\s\S]+?)\}/g
 
 var template = function (string, pool) {
   // Don't match values if there's nothing to replace
