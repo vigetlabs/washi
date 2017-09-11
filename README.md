@@ -1,7 +1,4 @@
-washi
-=====
-
-[![Build Status](https://travis-ci.org/vigetlabs/washi.png?branch=master)](https://travis-ci.org/vigetlabs/washi)
+# washi
 
 1. [Basic Usage](#basic-usage)
 2. [API](#api)
@@ -13,53 +10,123 @@ var Washi = require('washi');
 var $     = Washi.$;
 
 var Sample = {
-    ui: {
-        title: '.title',
-    },
-    events: {
-        // Use ui helper selectors as aliases with {element}
-        'mousedown {title}, touchstart {title}' : 'doSomething',
+  ui: {
+    title: '.title',
+  },
+  events: {
+    // Use ui helper selectors as aliases with {element}
+    'mousedown {title}, touchstart {title}' : 'doSomething',
 
-        // Alternatively, follow the syntax used by Backbone.Marionette
-        'click @ui.title': 'doSomethingElse'
-    },
-    initialize: function(options) {
-        this.ui.title.forEach(function(e) {
-          e.innerHTML = 'Washi is for Origami';
-        });
-    },
-    doSomething: function() {
-      var text = $.pluck(this.ui.title, 'innerHTML').join(' ');
-      console.log(text);
-    },
-    doSomethingElse: function() {
-        console.log("Something else");
-    }
-};
+    // Alternatively, follow the syntax used by Backbone.Marionette
+    'click @ui.title': 'doSomethingElse'
+  },
+  initialize: function(options) {
+    this.ui.title.forEach(function(e) {
+      e.innerHTML = 'Washi is for Origami'
+    });
+  },
+  doSomething: function() {
+    var text = $.map(this.ui.title, el => el.innerHTML).join(' ')
+    console.log(text)
+  },
+  doSomethingElse: function() {
+    console.log("Something else")
+  }
+}
 
 var sample = Washi(Sample, {
     el: "#sample-el"
-});
+})
 ```
 
 Corresponding with:
 
 ```html
 <div id="sample">
-    <h1 class="title">Paper Crane</h1>
+  <h1 class="title">Paper Crane</h1>
 </div>
 ```
 
-***
-
-<a href="http://code.viget.com">
-  <img src="http://code.viget.com/github-banner.png" alt="Code At Viget">
-</a>
-
-Visit [code.viget.com](http://code.viget.com) to see more projects from [Viget.](https://viget.com)
-
-
 ### API
+
+#### Washi(config: Object, options?: Object)
+
+Create a view component based upon a configuration. These configuration options follow:
+
+##### initialize(options: Object)
+
+Invoked after the Washi instance has been created. Use this method for setup behavior.
+
+```javascript
+let Widget = {
+  initialize: function(options) {
+    console.log('all set!')
+  }
+}
+
+let component = Washi(Widget, { el: document.body }) // "all set!"
+```
+
+##### events: Object
+
+Attach event listeners to the element associated with the component. Keys in this object are selectors, values are string references to methods on the configuration object:
+
+```javascript
+let Widget = {
+  events: {
+    'click button': 'onClick'
+  },
+
+  onClick: function(event) {
+    alert("HELLO!")
+  }
+}
+
+let component = Washi(Widget, { el: '.selector' })
+
+component.query('button').invoke('click') // "HELLO!"
+```
+
+##### ui: Object
+
+Preselect child nodes within the element provided to Washi. These selections are available in a few places.
+
+###### As aliases to their underlying selectors in the events object
+
+In the events object, `@ui.{name}` is replaced with the CSS selector for the UI entry:
+
+```javascript
+let Widget = {
+  ui: {
+    'button': 'button'
+  },
+  events: {
+    'click @ui.button': 'onClick'
+  },
+  onClick: function(event) {
+    alert("HELLO!")
+  }
+}
+```
+
+###### As entries in `this.ui`
+
+Reference the selected elements associated with a `ui` entry under `this.ui`:
+
+```javascript
+let Widget = {
+  ui: {
+    'button': 'button'
+  },
+  initialize: function() {
+    // An array of DOM elements
+    this.ui.button.forEach(el => el.click())
+    // Alternatively, a Washi chain
+    this.ui.$button.invoke('click')
+  }
+}
+```
+
 
 #### Washi.$
 
@@ -453,3 +520,12 @@ console.log(el.className) // 'btn'
 $.toggleClass(el, 'active', true)
 console.log(el.className) // 'btn active'
 ```
+
+***
+
+<a href="http://code.viget.com">
+  <img src="http://code.viget.com/github-banner.png" alt="Code At Viget">
+</a>
+
+Visit [code.viget.com](http://code.viget.com) to see more projects from [Viget.](https://viget.com)
+
