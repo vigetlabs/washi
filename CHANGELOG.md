@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 3.2.1
+
+- Remove `is-dom` dependency, which is inlined
+
 # 3.2.0
 
 - Use ES6 modules internally
