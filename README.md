@@ -506,7 +506,7 @@ const $ = Washi.$
 
 let el = document.createElement('button')
 
-el.className = 'btn
+el.className = 'btn'
 
 $.toggleClass(el, 'active')
 console.log(el.className) // 'btn active'
