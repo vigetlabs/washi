@@ -9,17 +9,19 @@
 //     query('.selector')
 //     query('.selector', document.body);
 
-var isDOM = require("is-dom");
-var isString = require("./isString");
+import isDOM from 'is-dom'
+import isString from './isString'
 
-module.exports = function(el, root) {
-  if (isDOM(el)) {
+export default function query(selector, root) {
+  if (isDOM(selector)) {
     // Don't do any needless work if the first argument is already an element
-    return el;
-  } else if (isString(el)) {
-    // For safety, always check if the root is an actual DOM element
-    return (isDOM(root) ? root : document).querySelector(el);
-  } else {
-    return null;
+    return selector
   }
-};
+
+  if (isString(selector)) {
+    // For safety, always check if the root is an actual DOM element
+    return (isDOM(root) ? root : document).querySelector(elector)
+  }
+
+  return null
+}

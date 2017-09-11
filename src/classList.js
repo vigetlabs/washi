@@ -1,16 +1,16 @@
 // A collection of methods for manipulating classes.
-var isDOM = require("is-dom");
-var tokenize = require("./tokenize");
-var result = require("./result");
+import isDOM from 'is-dom'
+import tokenize from './tokenize'
+import result from './result'
 
-var classList = {
+const classList = {
   // Given an element and a string of classes, add those classes if
   // the element is a DOM node
   addClass: function(el, classes) {
     if (isDOM(el)) {
       tokenize(classes).map(function(token) {
-        el.classList.add(token);
-      });
+        el.classList.add(token)
+      })
     }
   },
 
@@ -19,8 +19,8 @@ var classList = {
   removeClass: function(el, classes) {
     if (isDOM(el)) {
       tokenize(classes).map(function(token) {
-        el.classList.remove(token);
-      });
+        el.classList.remove(token)
+      })
     }
   },
 
@@ -29,16 +29,16 @@ var classList = {
   toggleClass: function(el, classes, keep) {
     if (isDOM(el) && arguments.length === 2) {
       tokenize(classes).map(function(token) {
-        el.classList.toggle(token);
-      });
+        el.classList.toggle(token)
+      })
     } else {
       if (keep) {
-        classList.addClass(el, classes);
+        classList.addClass(el, classes)
       } else {
-        classList.removeClass(el, classes);
+        classList.removeClass(el, classes)
       }
     }
   }
-};
+}
 
-module.exports = classList;
+export default classList

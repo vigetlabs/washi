@@ -1,26 +1,24 @@
-jest.autoMockOff();
+import delegate from '../delegate'
 
 function click(el) {
-  var click = document.createEvent("MouseEvents");
-  click.initEvent("click", true, true);
-  el.dispatchEvent(click);
+  var click = document.createEvent('MouseEvents')
+  click.initEvent('click', true, true)
+  el.dispatchEvent(click)
 }
 
-describe("Delegate", function() {
-  var delegate = require("../delegate");
+describe('Delegate', function() {
+  it('can delegate an event', function() {
+    var el = document.createElement('button')
+    var mock = jest.fn()
 
-  it("can delegate an event", function() {
-    var el = document.createElement("button");
-    var mock = jest.genMockFunction();
+    el.className = 'foobar'
 
-    el.className = "foobar";
+    delegate(document, 'click', '.foobar', mock)
 
-    delegate(document, "click", ".foobar", mock);
+    document.body.appendChild(el)
 
-    document.body.appendChild(el);
+    click(el)
 
-    click(el);
-
-    expect(mock).toBeCalled();
-  });
-});
+    expect(mock).toBeCalled()
+  })
+})

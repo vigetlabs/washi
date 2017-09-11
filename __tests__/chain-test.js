@@ -1,62 +1,66 @@
-jest.autoMockOff();
+import Washi from '../washi'
 
-describe("Chain", function() {
-  var Washi = require("washi");
+describe('Chain', function() {
+  it('can chain objects', function() {
+    var obj = {}
+    var mock = jest.fn()
 
-  it("can chain objects", function() {
-    var obj = {};
-    var mock = jest.genMockFunction();
+    Washi.$.chain(obj).tap(mock)
 
-    Washi.$.chain(obj).tap(mock);
+    expect(mock.mock.calls[0][0]).toEqual(obj)
+  })
 
-    expect(mock.mock.calls[0][0]).toEqual(obj);
-  });
-
-  it("can chain arrays", function() {
-    var arr = [1];
+  it('can chain arrays', function() {
+    var arr = [1]
 
     var result = Washi.$
       .chain(arr)
       .map(function(i) {
-        return i + 1;
+        return i + 1
       })
-      .valueOf();
+      .valueOf()
 
-    expect(result).toEqual([2]);
-  });
+    expect(result).toEqual([2])
+  })
 
-  it("has access to the element on calls", function() {
-    var el = document.createElement("button");
-    var mock = jest.genMockFunction();
+  it('has access to the element on calls', function() {
+    var el = document.createElement('button')
+    var mock = jest.fn()
 
-    Washi.$.chain(el).tap(mock).tap(mock);
+    Washi.$
+      .chain(el)
+      .tap(mock)
+      .tap(mock)
 
-    expect(mock.mock.calls[0][0]).toEqual(el);
-  });
+    expect(mock.mock.calls[0][0]).toEqual(el)
+  })
 
-  it("can chain multiple times", function() {
-    var el = document.createElement("button");
-    var mock = jest.genMockFunction();
+  it('can chain multiple times', function() {
+    var el = document.createElement('button')
+    var mock = jest.fn()
 
-    Washi.$.chain(el).tap(mock).tap(mock);
+    Washi.$
+      .chain(el)
+      .tap(mock)
+      .tap(mock)
 
-    expect(mock.mock.calls.length).toEqual(2);
-  });
+    expect(mock.mock.calls.length).toEqual(2)
+  })
 
-  it("returns the result of a previous chain to the next if provided", function() {
-    var el = document.createElement("button");
-    var mock = jest.genMockFunction();
+  it('returns the result of a previous chain to the next if provided', function() {
+    var el = document.createElement('button')
+    var mock = jest.fn()
 
     var result = Washi.$([el, el])
       .map(function(el) {
-        return el.tagName;
+        return el.tagName
       })
       .reduce(function(a, b) {
-        return [a, b].join(" ");
-      }, "")
+        return [a, b].join(' ')
+      }, '')
       .valueOf()
-      .trim();
+      .trim()
 
-    expect(result).toEqual("BUTTON BUTTON");
-  });
-});
+    expect(result).toEqual('BUTTON BUTTON')
+  })
+})

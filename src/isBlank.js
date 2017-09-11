@@ -1,5 +1,5 @@
 // Given a value, returns true if null or undefiend
 
-module.exports = function(obj) {
-  return obj === null || obj === undefined;
-};
+export default function isBlank(value) {
+  return value === null || value === void 0
+}

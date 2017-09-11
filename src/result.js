@@ -7,16 +7,16 @@
 // For example:
 //
 //     result(obj, 'member', fallback)
-var isFunction = require("./isFunction");
-var isBlank = require("./isBlank");
-var isUndefined = require("./isUndefined");
+import isFunction from './isFunction'
+import isBlank from './isBlank'
+import isUndefined from './isUndefined'
 
-module.exports = function(object, property, fallback) {
-  var value = isBlank(object) ? void 0 : object[property];
+export default function result(target, property, fallback) {
+  var value = isBlank(target) ? void 0 : target[property]
 
   if (isUndefined(value)) {
-    value = fallback;
+    value = fallback
   }
 
-  return isFunction(value) ? value.call(object) : value;
-};
+  return isFunction(value) ? value.call(target) : value
+}

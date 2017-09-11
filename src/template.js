@@ -6,40 +6,40 @@
 //
 //     template('{foo}', { foo: 'bar' }) //=> 'bar'
 //     template('{foo}') //=> '{foo}'
-var isBlank = require("./isBlank");
-var isRegExp = require("./isRegExp");
-var result = require("./result");
+import isBlank from './isBlank'
+import isRegExp from './isRegExp'
+import result from './result'
 
 // The template function will use this pattern to match values
-var pattern = /\{([\s\S]+?)\}/g;
+let pattern = /\{([\s\S]+?)\}/g
 
-var template = function(string, pool) {
+function template(string, pool) {
   // Don't match values if there's nothing to replace
   if (isBlank(pool)) {
-    return string;
+    return string
   }
 
   // Otherwise replace all instances of `{key}` with the value
   // of the passed `pool` argument. If a key doesn't exist, then
   // just return the whole match.
   return string.replace(pattern, function(whole, capture) {
-    return result(pool, capture.trim(), whole);
-  });
-};
+    return result(pool, capture.trim(), whole)
+  })
+}
 
 // Expose the templating pattern so that it can be overriden
-Object.defineProperty(template, "pattern", {
-  get: function() {
-    return pattern;
+Object.defineProperty(template, 'pattern', {
+  get() {
+    return pattern
   },
 
-  set: function(newPattern) {
+  set(newPattern) {
     if (isRegExp(newPattern)) {
-      pattern = newPattern;
+      pattern = newPattern
     } else {
-      throw new TypeError("template.setPattern expects a regular expression");
+      throw new TypeError('template.setPattern expects a regular expression')
     }
   }
-});
+})
 
-module.exports = template;
+export default template

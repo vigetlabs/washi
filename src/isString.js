@@ -1,4 +1,4 @@
 // Returns true of presented a string
-module.exports = function(obj) {
-  return typeof obj === "string";
-};
+export default function isString(obj) {
+  return typeof obj === 'string'
+}

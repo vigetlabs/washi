@@ -1,5 +1,5 @@
-var toString = {}.toString;
+var toString = {}.toString
 
-module.exports = function(value) {
-  return toString.call(value) === "[object RegExp]";
-};
+export default function isRegExp(value) {
+  return toString.call(value) === '[object RegExp]'
+}

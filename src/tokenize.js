@@ -1,4 +1,4 @@
 // Breaks apart words. Used in `./mapEvents`
-module.exports = function(string) {
-  return string.split(/\s+/);
-};
+export default function tokenize(string) {
+  return string.split(/\s+/)
+}

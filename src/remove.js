@@ -1,13 +1,11 @@
 // A DOM operation helper to remove children
-var remove = function(element) {
+export default function remove(element) {
   if (Array.isArray(element)) {
-    element.forEach(remove);
-    return element;
+    element.forEach(remove)
+    return element
   }
 
-  element.parentNode.removeChild(element);
+  element.parentNode.removeChild(element)
 
-  return element;
-};
-
-module.exports = remove;
+  return element
+}
