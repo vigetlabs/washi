@@ -1,9 +1,11 @@
 # washi
 
+A Backbone-inspired library for greater organization on small projects.
+
 1. [Basic Usage](#basic-usage)
 2. [API](#api)
 
-### Basic usage
+## Basic usage
 
 ```javascript
 var Washi = require('washi');
@@ -47,13 +49,39 @@ Corresponding with:
 </div>
 ```
 
-### API
 
-#### Washi(config: Object, options?: Object)
+## API
 
-Create a view component based upon a configuration. These configuration options follow:
+1. [Washi Components](#washi-components)
+2. [Washi Utilities](#washi-utilities)
 
-##### initialize(options: Object)
+### Washi Components
+
+Create a view component based upon a configuration:
+
+```javascript
+let Sample = {
+  ui: {
+    title: '.title',
+  },
+  events: {
+    'click @ui.title': 'doSomething'
+  },
+  initialize: function(options) {
+    // Startup
+    console.log("Hello, world!")
+  },
+  doSomething: function() {
+    alert("click!")
+  }
+}
+
+let sample = Washi(Sample, {
+  el: "#sample-el"
+})
+```
+
+#### initialize(options: Object)
 
 Invoked after the Washi instance has been created. Use this method for setup behavior.
 
@@ -67,7 +95,7 @@ let Widget = {
 let component = Washi(Widget, { el: document.body }) // "all set!"
 ```
 
-##### events: Object
+#### events: Object
 
 Attach event listeners to the element associated with the component. Keys in this object are selectors, values are string references to methods on the configuration object:
 
@@ -87,11 +115,11 @@ let component = Washi(Widget, { el: '.selector' })
 component.query('button').invoke('click') // "HELLO!"
 ```
 
-##### ui: Object
+#### ui: Object
 
 Preselect child nodes within the element provided to Washi. These selections are available in a few places.
 
-###### As aliases to their underlying selectors in the events object
+##### As aliases to their underlying selectors in the events object
 
 In the events object, `@ui.{name}` is replaced with the CSS selector for the UI entry:
 
@@ -109,7 +137,7 @@ let Widget = {
 }
 ```
 
-###### As entries in `this.ui`
+##### As entries in `this.ui`
 
 Reference the selected elements associated with a `ui` entry under `this.ui`:
 
@@ -128,11 +156,39 @@ let Widget = {
 ```
 
 
-#### Washi.$
+
+### Washi Utilities
 
 Washi exposes a number of utility methods under the `$` namespace:
 
-##### chain(target: Object | Array)
+1. [chain](#chaintarget-object--array)
+2. [Array operations](#array-operations)
+3. [toArray](#toarraylist-enumerable)
+4. [extend](#extendtarget-object-others)
+5. [has](#hastarget-object-property-string)
+6. [query](#queryselector-string-root-htmlelement--document)
+7. [queryAll](#queryallselector-string)
+8. [invoke](#invokelist-array-method-string-arguments-any)
+9. [isBlank](#isblankvalue-any)
+10. [isDOM](#isdomvalue-any)
+11. [isFunction](#isfunctionvalue-any)
+12. [isObject](#isobjectvalue-any)
+13. [isRegExp](#isregexpvalue-any)
+14. [isString](#isstringvalue-any)
+15. [isUndefined](#isundefinedvalue-any)
+16. [matches](#matchesel-element-selector-string)
+17. [on](#onel-element-event-string-callback-function-capture-boolean)
+18. [off](#offel-element-event-string-callback-function-capture-boolean)
+18. [result](#resulttarget-any-property-string-fallback-any)
+19. [tap](#taptarget-any-fn-function-scope-any)
+20. [template](#templatetarget-any-fn-function-scope-any)
+21. [append](#appendparent-element-elements-element)
+22. [remove](#removeelements-element--element)
+23. [addClass](#addclasselement-element-classes-string)
+24. [removeClass](#removeclasselement-element-classes-string)
+25. [toggleClass](#toggleclasselement-element-classes-string-keep-boolean)
+
+#### chain(target: Object | Array)
 
 Creates a pipeline for executing multiple operatins on a value, this can be a single object or a list of values. Use `valueOf()` to end the chain, returning the underlying value:
 
@@ -155,7 +211,7 @@ $('button').on('click', () => {
 })
 ```
 
-##### Array operations
+#### Array operations
 
 Washi.$ includes most ES5 methods from the Array prototype. The primary benefit of doing this is to work around DOM APIs that return _"array like"_ values such as [`NodeList`](https://developer.mozilla.org/en-US/docs/Web/API/NodeList):
 
@@ -189,7 +245,7 @@ let internalLinks = $('a').filter(el => el.href.origin === window.location.origi
 internalLinks.on('click', () => console.log("Retention! Hurrah!"))
 ```
 
-##### toArray(list: Enumerable) 
+#### toArray(list: Enumerable) 
 
 Convert a list-like value, such as a `NodeList` returned from `document.querySelectorAll` into an array:
 
@@ -200,7 +256,7 @@ let links = document.querySelectorAll('a')
 let hrefs = $.toArray(links).map(el => el.href)
 ```
 
-##### extend(target: Object, ...others)
+#### extend(target: Object, ...others)
 
 Given a list of arguments, extend a target object with additional properties:
 
@@ -215,7 +271,7 @@ let purple = $.extend({}, red, blue) // { r: 200, g: 0, b: 200 }
 
 **Important:** the first argument, `target`, is mutated. This is a destructive operation!
 
-##### has(target: Object, property: String)
+#### has(target: Object, property: String)
 
 Returns true if a given object has a property. This is sugar around `Object.prototype.hasOwnProperty` that covers some edge cases, such as null or undefined values.
 
@@ -228,7 +284,7 @@ $.has(styles, 'color')  // true
 $.has(styles, 'border') // false
 ```
 
-##### query(selector: String, root: HTMLElement = document)
+#### query(selector: String, root: HTMLElement = document)
 
 Select an HTML element. When no second argument is given, selection occurs on the `document`. When no element is found, it returns `null`.
 
@@ -242,7 +298,7 @@ if (btn) {
 }
 ```
 
-##### queryAll(selector: String)
+#### queryAll(selector: String)
 
 Select multiple HTML elements. The resulting selection is converted into an Array, making its safe to perform operations like `forEach`, `map`, and `reduce`. When no element is found, it returns an empty array.
 
@@ -254,7 +310,7 @@ let items = $('ul').queryAll('li')
 items.forEach(el => console.log(item.innerHTML))
 ```
 
-##### invoke(list: Array, method: String, ...arguments: any[])
+#### invoke(list: Array, method: String, ...arguments: any[])
 
 Execute a method on each member of a list:
 
@@ -269,7 +325,7 @@ $.invoke(planets, 'toUpperCase') // ['MERCURY', 'VENUS', 'EARTH', 'MARS']
 $('button').invoke('click')
 ```
 
-##### isBlank(value: any)
+#### isBlank(value: any)
 
 Is a value null or undefined?
 
@@ -283,7 +339,7 @@ $.isBlank(null)       // true
 $.isBlank(undefined)  // true
 ```
 
-##### isDOM(value: any)
+#### isDOM(value: any)
 
 Is a value a DOM element?
 
@@ -294,7 +350,7 @@ $.isDOM({})          // false
 $.isDOM(new Image()) // true
 ```
 
-##### isFunction(value: any)
+#### isFunction(value: any)
 
 Is a value a function?
 
@@ -305,7 +361,7 @@ $.isFunction({})            // false
 $.isFunction(function() {}) // true
 ```
 
-##### isObject(value: any)
+#### isObject(value: any)
 
 Is a value an object? This function helps to avoid pitfalls with type checking objects. For example: `typeof null === 'object'`!
 
@@ -318,7 +374,7 @@ $.isObject(null)          // false
 $.isObject(function() {}) // false
 ```
 
-##### isRegExp(value: any)
+#### isRegExp(value: any)
 
 Is a value a regular expression?
 
@@ -330,7 +386,7 @@ $.isRegExp(/[A-Z]/)             // true
 $.isRegExp(new RegExp("[A-Z]")) // true
 ```
 
-##### isString(value: any)
+#### isString(value: any)
 
 Is a value a string?
 
@@ -341,7 +397,7 @@ $.isString({})            // false
 $.isString("Hello world") // true
 ```
 
-##### isUndefined(value: any)
+#### isUndefined(value: any)
 
 Is a value undefined?
 
@@ -354,7 +410,7 @@ $.isUndefined(0)         // false
 $.isUndefined(undefined) // true
 ```
 
-##### matches(el: Element, selector: String)
+#### matches(el: Element, selector: String)
 
 Returns true if the provided element matches a CSS selector. When possible, this function uses the [Element.matches](https://developer.mozilla.org/en-US/docs/Web/API/Element/matches) DOM API.
 
@@ -364,7 +420,7 @@ const $ = Washi.$
 $.matches(document.body, '.class-name')
 ```
 
-##### on(el: Element, event: String, callback: Function, capture: boolean)
+#### on(el: Element, event: String, callback: Function, capture: boolean)
 
 Safely attach an event listener with extreme browser support (IE5+).
 
@@ -379,7 +435,7 @@ $('button').on('click', event => alert("CLICK!"))
 
 For more information about event listening, see [EventTarget.addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
 
-##### off(el: Element, event: String, callback: Function, capture: boolean)
+#### off(el: Element, event: String, callback: Function, capture: boolean)
 
 Safely remove an event listener with extreme browser support (IE5+).
 
@@ -396,7 +452,7 @@ buttons.off('click', handler)
 buttons.invoke('click') // silence
 ```
 
-##### result(target: any, property: String, fallback: any)
+#### result(target: any, property: String, fallback: any)
 
 Check for ownership of a value, optionally calling it if it is a function. If the value is `undefined`, return the fallback value.
 
@@ -407,7 +463,7 @@ $.result({}, 'method', 'missing') // 'missing'
 $.result('foobar', 'toUpperCase', 'UNKNOWN') // 'FOOBAR'
 ```
 
-##### tap(target: any, fn: Function, scope: any)
+#### tap(target: any, fn: Function, scope: any)
 
 Calls a function at a given scope, passing in the target value as the only argument. This is primarily intended side-effects when chaining:
 
@@ -425,7 +481,7 @@ function render(items) {
 let dates = $([new Date('01-01-2000'), new Date('02-02-2010'])
 ```
 
-##### template(target: any, fn: Function, scope: any)
+#### template(target: any, fn: Function, scope: any)
 
 An extremely simple templating language. Primary used for basic string replacement. For more serious uses, particulary with DOM manipulation, **use a vetted templating language such as [mustachejs](https://github.com/janl/mustache.js/)**.
 
@@ -436,7 +492,7 @@ $.template('{foo}', { foo: 'bar' }) //=> 'bar'
 $.template('{foo}') //=> '{foo}'
 ```
 
-##### append(parent: Element, ...elements: Element[])
+#### append(parent: Element, ...elements: Element[])
 
 Append a list of children to an element:
 
@@ -454,7 +510,7 @@ planets.map(item => {
 $('ul').append(planets.valueOf())
 ```
 
-##### remove(elements: Element | Element[])
+#### remove(elements: Element | Element[])
 
 Remove a single HTML element from its parent, or each element within a list:
 
@@ -465,7 +521,7 @@ const $ = Washi.$
 $('#my-form button').remove()
 ```
 
-##### addClass(element: Element, classes: String)
+#### addClass(element: Element, classes: String)
 
 Add one or more class names to an element:
 
@@ -481,7 +537,7 @@ $.addClass(el, 'btn-large')
 console.log(el.className) // 'btn btn-large'
 ```
 
-##### removeClass(element: Element, classes: String)
+#### removeClass(element: Element, classes: String)
 
 Remove one or more class names to an element:
 
@@ -497,7 +553,7 @@ $.removeClass(el, 'btn btn-large')
 console.log(el.className) // ''
 ```
 
-##### toggleClass(element: Element, classes: String, keep?: Boolean)
+#### toggleClass(element: Element, classes: String, keep?: Boolean)
 
 Toggle one or more class names to an element. When provided, adds/removes the class names based upon the `keep` argument
 
