@@ -2,8 +2,27 @@
 
 A small (2.2kb gzipped), Backbone-inspired, library for greater organization on small projects. 
 
-1. [Basic Usage](#basic-usage)
-2. [API](#api)
+1. [Installation](#installation)
+2. [Basic Usage](#basic-usage)
+3. [API](#api)
+
+## Installation
+
+### package.json
+
+Washi is available on [npm](http://npmjs.com):
+
+```javascript
+npm install --save washi
+```
+
+### global
+
+If npm isn't your thing, or you'd rather include Washi as vendor code, download it from the [`unpkg`](unpkg.com) CDN:
+
+https://unpkg.com/washi
+
+This is a [UMD module](https://github.com/umdjs/umd). It should interop perfectly with CommonJS and AMD, or otherwise as a global by accessing `Washi`.
 
 ## Basic usage
 
