@@ -1,16 +1,21 @@
 {
   "name": "washi",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "description": "One of many backbone-esque view helpers.",
-  "main": "washi.js",
-  "directories": {
-    "test": "test"
-  },
+  "main": "dist/washi.js",
+  "jsnext:main": "washi.js",
   "scripts": {
     "test": "jest",
     "build": "webpack -p",
+    "prepublish": "yarn test && yarn build",
     "format": "./bin/format"
   },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/vigetlabs/washi.git"
