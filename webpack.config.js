@@ -1,16 +1,16 @@
+const path = require('path')
+const webpack = require('webpack')
+
 module.exports = {
   devtool: 'sourcemap',
   entry: './washi.js',
   output: {
     filename: 'washi.js',
-    sourceMapFileName: 'washi.map',
-    path: './dist',
-    libraryTarget: 'var',
+    path: path.resolve('dist'),
+    libraryTarget: 'umd',
     library: 'Washi'
   },
-  externals: {
-    washi: 'Washi'
-  },
+  plugins: [new webpack.optimize.ModuleConcatenationPlugin()],
   module: {
     loaders: [
       {

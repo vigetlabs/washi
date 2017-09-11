@@ -1,6 +1,6 @@
 # washi
 
-A Backbone-inspired library for greater organization on small projects.
+A small (2.2kb gzipped), Backbone-inspired, library for greater organization on small projects. 
 
 1. [Basic Usage](#basic-usage)
 2. [API](#api)
