@@ -9,7 +9,7 @@ var append = function(parent, a, b, c) {
     parent = parent[0];
   }
 
-  children.forEach(parent.appendChild, parent)
+  children.forEach(parent.appendChild, parent);
 
   return parent;
 };

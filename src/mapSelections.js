@@ -4,8 +4,8 @@
 // For example:
 //
 //     mapSelection(document.body, { paragraphs: 'p', links: 'a' });
-var queryAll = require('./queryAll');
-var util     = require('./util');
+var queryAll = require("./queryAll");
+var util = require("./util");
 
 module.exports = function(el, ui) {
   var assignments = {};
@@ -14,7 +14,7 @@ module.exports = function(el, ui) {
   // within the context of this View's element
   for (var component in ui) {
     assignments[component] = queryAll(el, ui[component]);
-    assignments['$' + component] = util(assignments[component]);
+    assignments["$" + component] = util(assignments[component]);
   }
 
   return assignments;

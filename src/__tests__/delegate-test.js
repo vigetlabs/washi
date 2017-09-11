@@ -7,15 +7,15 @@ function click(el) {
 }
 
 describe("Delegate", function() {
-  var delegate = require('../delegate');
+  var delegate = require("../delegate");
 
-  it ("can delegate an event", function() {
-    var el   = document.createElement('button');
+  it("can delegate an event", function() {
+    var el = document.createElement("button");
     var mock = jest.genMockFunction();
 
-    el.className = 'foobar';
+    el.className = "foobar";
 
-    delegate(document, 'click', '.foobar', mock);
+    delegate(document, "click", ".foobar", mock);
 
     document.body.appendChild(el);
 
@@ -23,5 +23,4 @@ describe("Delegate", function() {
 
     expect(mock).toBeCalled();
   });
-
 });

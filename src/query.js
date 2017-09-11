@@ -9,8 +9,8 @@
 //     query('.selector')
 //     query('.selector', document.body);
 
-var isDOM    = require('is-dom');
-var isString = require('./isString');
+var isDOM = require("is-dom");
+var isString = require("./isString");
 
 module.exports = function(el, root) {
   if (isDOM(el)) {

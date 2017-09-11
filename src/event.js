@@ -2,8 +2,8 @@ module.exports = on;
 module.exports.on = on;
 module.exports.off = off;
 
-function on (element, event, callback, capture) {
-  !element.addEventListener && (event = 'on' + event);
+function on(element, event, callback, capture) {
+  !element.addEventListener && (event = "on" + event);
 
   if (element.addEventListener) {
     element.addEventListener(event, callback, capture);
@@ -14,8 +14,8 @@ function on (element, event, callback, capture) {
   return callback;
 }
 
-function off (element, event, callback, capture) {
-  !element.removeEventListener && (event = 'on' + event);
+function off(element, event, callback, capture) {
+  !element.removeEventListener && (event = "on" + event);
 
   if (element.removeEventListener) {
     element.removeEventListener(event, callback, capture);

@@ -6,13 +6,13 @@
 //     mapEvents(window, { resize: method }, {}, obj)
 //     mapEvents(document.boyd, { 'click {items}': method }, { items: '.class' }, obj);
 
-var delegate   = require('./delegate');
-var tokenize   = require('./tokenize');
-var template   = require('./template');
-var isFunction = require('./isFunction');
+var delegate = require("./delegate");
+var tokenize = require("./tokenize");
+var template = require("./template");
+var isFunction = require("./isFunction");
 
-function bindEvent (el, name, method, selectors, scope) {
-  var items  = name.split(',');
+function bindEvent(el, name, method, selectors, scope) {
+  var items = name.split(",");
   var toCall = (isFunction(method) ? method : scope[method]).bind(scope);
 
   while (items.length) {

@@ -1,28 +1,24 @@
 jest.autoMockOff();
 
 describe("Events", function() {
+  var Washi = require("washi");
 
-  var Washi = require('washi');
-
-  function click (el) {
-    var event = document.createEvent('MouseEvents');
-    event.initEvent('click', true, true);
+  function click(el) {
+    var event = document.createEvent("MouseEvents");
+    event.initEvent("click", true, true);
     el.dispatchEvent(event);
   }
 
   describe("DOM Events", function() {
-
-    it ("binds events to its element", function() {
+    it("binds events to its element", function() {
       var m = Washi({
-
-        el: document.createElement('button'),
+        el: document.createElement("button"),
 
         events: {
-          click: 'finished'
+          click: "finished"
         },
 
         finished: jest.genMockFunction()
-
       }).get(0);
 
       click(m.el);
@@ -30,38 +26,38 @@ describe("Events", function() {
       expect(m.finished).toBeCalled();
     });
 
-    it ("delegates events to regular selectors", function() {
+    it("delegates events to regular selectors", function() {
       var m = Washi({
         el: function() {
-          var div = document.createElement('div');
+          var div = document.createElement("div");
           div.innerHTML = "<p><span>Test</span></p>";
           return div;
         },
         events: {
-          'click p': 'finished'
+          "click p": "finished"
         },
         finished: jest.genMockFunction()
       }).get(0);
 
-      click(m.el.querySelector('span'));
+      click(m.el.querySelector("span"));
 
       expect(m.finished).toBeCalled();
 
-      expect(m.finished.mock.calls[0][0].target.tagName).toEqual('SPAN');
+      expect(m.finished.mock.calls[0][0].target.tagName).toEqual("SPAN");
     });
 
-    it ("can alias event names using the ui object", function() {
+    it("can alias event names using the ui object", function() {
       var m = Washi({
         el: function() {
-          var div = document.createElement('div');
+          var div = document.createElement("div");
           div.innerHTML = "<p>Test</p>";
           return div;
         },
         ui: {
-          child: 'p'
+          child: "p"
         },
         events: {
-          'click {child}': 'finished'
+          "click {child}": "finished"
         },
         finished: jest.genMockFunction()
       }).get(0);
@@ -69,21 +65,21 @@ describe("Events", function() {
       click(m.ui.$child.get(0));
 
       expect(m.finished).toBeCalled();
-      expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
+      expect(m.finished.mock.calls[0][0].target.tagName).toEqual("P");
     });
 
-    it ("trims matched aliases", function() {
+    it("trims matched aliases", function() {
       var m = Washi({
         el: function() {
-          var div = document.createElement('div');
+          var div = document.createElement("div");
           div.innerHTML = "<p>Test</p>";
           return div;
         },
         ui: {
-          child: 'p'
+          child: "p"
         },
         events: {
-          'click { child }': 'finished'
+          "click { child }": "finished"
         },
         finished: jest.genMockFunction()
       }).get(0);
@@ -91,7 +87,7 @@ describe("Events", function() {
       click(m.ui.$child.get(0));
 
       expect(m.finished).toBeCalled();
-      expect(m.finished.mock.calls[0][0].target.tagName).toEqual('P')
+      expect(m.finished.mock.calls[0][0].target.tagName).toEqual("P");
     });
   });
 });

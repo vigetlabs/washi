@@ -1,10 +1,9 @@
 // A collection of methods for manipulating classes.
-var isDOM    = require('is-dom');
-var tokenize = require('./tokenize');
-var result   = require('./result');
+var isDOM = require("is-dom");
+var tokenize = require("./tokenize");
+var result = require("./result");
 
 var classList = {
-
   // Given an element and a string of classes, add those classes if
   // the element is a DOM node
   addClass: function(el, classes) {
@@ -40,7 +39,6 @@ var classList = {
       }
     }
   }
-
 };
 
 module.exports = classList;

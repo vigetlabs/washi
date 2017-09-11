@@ -2,14 +2,14 @@
 //
 // Example: `chain(Array.prototype)([1, 2, 3, 4 ]).join(' ').valueOf();`
 
-var isUndefined = require('./isUndefined');
-var _           = require('./collection');
-var result      = require('./result');
+var isUndefined = require("./isUndefined");
+var _ = require("./collection");
+var result = require("./result");
 
-module.exports = function (target) {
+module.exports = function(target) {
   // Return a scoped function so each fork of a chain has its own working value
   // This way, additional chains do not mutate the state of other chains.
-  return function (value, scope) {
+  return function(value, scope) {
     var chain = {};
 
     // Returns a function that will execute a given method
@@ -45,11 +45,10 @@ module.exports = function (target) {
 
     // Allows the retrieval of a specific key in the source value
     // with an optional fallback
-    chain.get = function (key, fallback) {
+    chain.get = function(key, fallback) {
       return result(value, key, fallback);
     };
 
     return chain;
   };
-
 };

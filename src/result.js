@@ -7,9 +7,9 @@
 // For example:
 //
 //     result(obj, 'member', fallback)
-var isFunction  = require('./isFunction');
-var isBlank     = require('./isBlank');
-var isUndefined = require('./isUndefined');
+var isFunction = require("./isFunction");
+var isBlank = require("./isBlank");
+var isUndefined = require("./isUndefined");
 
 module.exports = function(object, property, fallback) {
   var value = isBlank(object) ? void 0 : object[property];

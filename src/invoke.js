@@ -3,7 +3,7 @@
 // For example:
 //
 //     invoke([1, 2, 3 ], 'toString')
-var _ = require('./collection');
+var _ = require("./collection");
 
 module.exports = function(list, property) {
   var args = _.slice(arguments, 2);

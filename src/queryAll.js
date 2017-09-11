@@ -4,10 +4,10 @@
 // - Given an element, it will return that element embedded in an array
 // - Given a string, it will return the result of executing element.querySelectorAll
 
-var isDOM       = require('is-dom');
-var isString    = require('./isString');
-var isUndefined = require('./isUndefined');
-var _           = require('./collection');
+var isDOM = require("is-dom");
+var isString = require("./isString");
+var isUndefined = require("./isUndefined");
+var _ = require("./collection");
 
 var queryAll = function(el, selector) {
   var hasSelector = isUndefined(selector) === false;
@@ -28,7 +28,7 @@ var queryAll = function(el, selector) {
   // If no selector is given, but el is a DOM element then
   // just return the element in an array
   if (!hasSelector && isDOM(el)) {
-    return [ el ];
+    return [el];
   }
 
   // If `el` is actually a selector, findAll from document

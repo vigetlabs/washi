@@ -3,7 +3,7 @@
 // For example:
 //
 //     pluck([{ color: red }, { color: blue }], 'color', 'black')
-var result = require('./result');
+var result = require("./result");
 
 module.exports = function(list, prop, fallback) {
   return list.map(function(item) {

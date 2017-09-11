@@ -9,7 +9,8 @@
   "scripts": {
     "test": "jest",
     "build": "webpack -p --optimize-minimize --optimize-occurence-order --optimize-dedupe",
-    "documentation": "docco washi.js src/*.js"
+    "documentation": "docco washi.js src/*.js",
+    "format": "./bin/format"
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,9 @@
   },
   "dependencies": {
     "is-dom": "^1.0.4"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   }
 }

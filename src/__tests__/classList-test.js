@@ -1,48 +1,46 @@
-jest.dontMock('../classList');
-jest.dontMock('is-dom');
-jest.dontMock('../tokenize');
-jest.dontMock('../result');
+jest.dontMock("../classList");
+jest.dontMock("is-dom");
+jest.dontMock("../tokenize");
+jest.dontMock("../result");
 
-describe('classList', function() {
+describe("classList", function() {
+  it("can add a list of classes to an element", function() {
+    var el = document.createElement("div");
+    var classList = require("../classList");
 
-  it ('can add a list of classes to an element', function() {
-    var el = document.createElement('div');
-    var classList = require('../classList');
+    classList.addClass(el, "foo bar");
 
-    classList.addClass(el, 'foo bar');
-
-    expect(el.className).toEqual('foo bar');
+    expect(el.className).toEqual("foo bar");
   });
 
-  it ('can remove a list of classes to an element', function() {
-    var el = document.createElement('div');
-    var classList = require('../classList');
+  it("can remove a list of classes to an element", function() {
+    var el = document.createElement("div");
+    var classList = require("../classList");
 
-    el.className = 'foo bar baz';
+    el.className = "foo bar baz";
 
-    classList.removeClass(el, 'foo bar');
+    classList.removeClass(el, "foo bar");
 
-    expect(el.className).toEqual('baz');
+    expect(el.className).toEqual("baz");
   });
 
-  it ('can toggle a list of classes from an element given a boolean', function() {
-    var el = document.createElement('div');
-    var classList = require('../classList');
+  it("can toggle a list of classes from an element given a boolean", function() {
+    var el = document.createElement("div");
+    var classList = require("../classList");
 
-    el.className = 'foo bar'
+    el.className = "foo bar";
 
-    classList.toggleClass(el, 'foo', false);
+    classList.toggleClass(el, "foo", false);
 
-    expect(el.className).toEqual('bar');
+    expect(el.className).toEqual("bar");
   });
 
-  it ('can toggle a list of classes from an element if no third option is provided', function() {
-    var el = document.createElement('div');
-    var classList = require('../classList');
+  it("can toggle a list of classes from an element if no third option is provided", function() {
+    var el = document.createElement("div");
+    var classList = require("../classList");
 
-    classList.toggleClass(el, 'foo');
+    classList.toggleClass(el, "foo");
 
-    expect(el.className).toEqual('foo');
+    expect(el.className).toEqual("foo");
   });
-
 });

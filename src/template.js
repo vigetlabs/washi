@@ -6,14 +6,14 @@
 //
 //     template('{foo}', { foo: 'bar' }) //=> 'bar'
 //     template('{foo}') //=> '{foo}'
-var isBlank  = require('./isBlank');
-var isRegExp = require('./isRegExp');
-var result   = require('./result');
+var isBlank = require("./isBlank");
+var isRegExp = require("./isRegExp");
+var result = require("./result");
 
 // The template function will use this pattern to match values
-var pattern = /\{([\s\S]+?)\}/g
+var pattern = /\{([\s\S]+?)\}/g;
 
-var template = function (string, pool) {
+var template = function(string, pool) {
   // Don't match values if there's nothing to replace
   if (isBlank(pool)) {
     return string;
@@ -28,8 +28,7 @@ var template = function (string, pool) {
 };
 
 // Expose the templating pattern so that it can be overriden
-Object.defineProperty(template, 'pattern', {
-
+Object.defineProperty(template, "pattern", {
   get: function() {
     return pattern;
   },
@@ -38,10 +37,9 @@ Object.defineProperty(template, 'pattern', {
     if (isRegExp(newPattern)) {
       pattern = newPattern;
     } else {
-      throw new TypeError('template.setPattern expects a regular expression');
+      throw new TypeError("template.setPattern expects a regular expression");
     }
   }
-
 });
 
 module.exports = template;

@@ -7,16 +7,30 @@ var _ = Array.prototype;
 
 // The whitelist contains all of the methods we want to pluck from Array
 var whitelist = [
-  'join', 'reverse', 'sort', 'push', 'pop', 'shift',
-  'unshift', 'splice', 'concat', 'slice', 'indexOf',
-  'lastIndexOf', 'forEach', 'map', 'reduce', 'reduceRight',
-  'filter', 'some', 'every'
+  "join",
+  "reverse",
+  "sort",
+  "push",
+  "pop",
+  "shift",
+  "unshift",
+  "splice",
+  "concat",
+  "slice",
+  "indexOf",
+  "lastIndexOf",
+  "forEach",
+  "map",
+  "reduce",
+  "reduceRight",
+  "filter",
+  "some",
+  "every"
 ];
 
 // Reduce the whitelist into an object of wrapped functions that apply
 // upon a given list.
 var collection = whitelist.reduce(function(memo, method) {
-
   memo[method] = function(list) {
     // Extract out the list argument
     var withoutList = _.slice.call(arguments, 1);
