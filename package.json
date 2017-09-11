@@ -1,6 +1,6 @@
 {
   "name": "washi",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "One of many backbone-esque view helpers.",
   "main": "dist/washi.js",
   "jsnext:main": "washi.js",
